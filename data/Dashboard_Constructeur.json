@@ -1,0 +1,14 @@
+{
+    "Dashboard_constructeur_1" :{
+        "Nom" : "Constructeur numéro 1",
+        "Préfixe MAC" : ""
+    },
+    "Dashboard_constructeur_1Bis" :{
+        "Nom" : "Constructeur numéro 1 Bis",
+        "Préfixe MAC" : "00:20:d3"
+    },
+    "Dashboard_constructeur_2" :{
+        "Nom" : "Constructeur numéro 2",
+        "Préfixe MAC" : "00:20:d3"
+    }
+}

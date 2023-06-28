@@ -85,6 +85,17 @@ Fill Data In Constructeur Creation
     Input Text    ${prefixe_mac_field}    ${data["Préfixe MAC"]}
     CHECK INPUT TEXT FIELD LOG    Préfixe MAC    ${prefixe_mac_field}    ${data["Préfixe MAC"]}    False
     Click Button    ${ajouter_button}
+
+Fill Data In Constructeur
+    [Arguments]    ${data}    
+    Put All Field Xpath Constructeur In Global
+
+    Wait Until Element Is Visible        ${nom_field}
+    Input Text    ${nom_field}    ${data["Nom"]}
+    CHECK INPUT TEXT FIELD LOG    Nom    ${nom_field}    ${data["Nom"]}    False
+    Input Text    ${prefixe_mac_field}    ${data["Préfixe MAC"]}
+    CHECK INPUT TEXT FIELD LOG    Préfixe MAC    ${prefixe_mac_field}    ${data["Préfixe MAC"]}    False
+    Click Button    ${validation_button}
     
 # Check And Delete Existing Constructeurs
 #     ${test_1}    Run Keyword And Return Status    Wait Until Page Contains    Constructeur numéro 1
@@ -110,17 +121,29 @@ Fill Data In Constructeur Creation
 #     END
 
 Check And Delete Existing Constructeurs
-    [Arguments]    @{all_noms}
+    [Arguments]    &{nom_dict}
     
-    Sort List    ${all_noms}
-    Reverse List    ${all_noms}    
+    # Sort List    ${all_noms}
+    # Reverse List    ${all_noms} 
+       
+    @{all_noms}    Create List
 
-    FOR    ${nom}    IN    @{all_noms}
+    FOR    ${nom}    ${value}    IN    &{nom_dict}
+        Append To List    ${all_noms}    ${nom}
+    END
+    Sort List    ${all_noms}
+    Reverse List    ${all_noms}
+    Log    ${all_noms}
+    ${var}    Set Variable    ${nom_dict["Dashboard_constructeur_2"]}
+    Log    ${var["Nom"]}
+
+    FOR    ${test}    IN    @{all_noms}
         Wait Until Page Contains Element    ${name_filter_search}
-        Input Text    ${name_filter_search}    ${nom} 
-        ${test}    Run Keyword And Return Status    Wait Until Page Contains Element    //tr[td[contains(text(),'${nom}')]]    2s
+        ${dict_test}    Set Variable    ${nom_dict["${test}"]}
+        Input Text    ${name_filter_search}    ${dict_test["Nom"]} 
+        ${test}    Run Keyword And Return Status    Wait Until Page Contains Element    //tr[td[contains(text(),'${dict_test["Nom"]}')]]    1s
         IF    ${test}
-            Click Element    //tr[td[contains(text(),'${nom}')]]
+            Click Element    //tr[td[contains(text(),'${dict_test["Nom"]}')]]
             Wait Until Page Contains Element    ${trash_logo}
             Click Element    ${trash_logo}
             Validate Popup Confirmer
@@ -128,18 +151,34 @@ Check And Delete Existing Constructeurs
         END
     END
 
-Test
+Get Column Index From Name
+    [Arguments]    ${name_column}
+
     Click And Check Modèle Equipments    
     Wait Until Page Contains Element    xpath:/html/body/main/div[2]/div/div/div/div[2]/div/div[4]/table/thead/tr
 
     ${elements}    Get WebElements    xpath:/html/body/main/div[2]/div/div/div/div[2]/div/div[4]/table/thead/tr
     Log    ${elements}
 
-    @{noms}    Create List
+    @{names}    Create List
     FOR    ${element}    IN    @{elements}
-        ${nom}    Get Text    ${element}
-        Append To List    ${noms}    ${nom}
+        ${name}    Get Text    ${element}
+        Append To List    ${names}    ${name}
+    END 
+    @{names}    Split String    ${name}    \n
+
+    FOR    ${index}    ${name}    IN ENUMERATE    @{names}
+        ${test}    Run Keyword And Return Status    Should Be Equal    ${name_column}    ${name}
+        IF    ${test}
+            ${return}    Set Variable    ${index}
+        END
     END
+
+    ${return}    Evaluate    ${return} +1
+
+    [Return]   ${return}
+            
+
 
 Click Modèle
     Click Element    //*[@id="sidebarNav"]/li[3]/a

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 6.1 (Python 3.11.3 on win32)" generated="20230628 11:44:31.342" rpa="false" schemaversion="4">
+<robot generator="Robot 6.1 (Python 3.11.3 on win32)" generated="20230628 17:25:13.707" rpa="false" schemaversion="4">
 <suite id="s1" name="Utils Robotframework" source="C:\workspace\utils_robotframework">
 <suite id="s1-s1" name="Dashboard Constructeur" source="C:\workspace\utils_robotframework\Dashboard_Constructeur.robot">
 <kw name="Connect To Anyway" library="front" type="SETUP">
@@ -7,91 +7,46 @@
 <arg>${url_anyway}</arg>
 <arg>${browser}</arg>
 <doc>Opens a new browser instance to the optional ``url``.</doc>
-<msg timestamp="20230628 11:44:31.716" level="INFO">Opening browser 'chrome' to base url 'https://anyway.qal.covage.com/dashboard'.</msg>
-<status status="PASS" starttime="20230628 11:44:31.715" endtime="20230628 11:44:34.137"/>
+<msg timestamp="20230628 17:25:14.159" level="INFO">Opening browser 'chrome' to base url 'https://anyway.qal.covage.com/dashboard'.</msg>
+<status status="PASS" starttime="20230628 17:25:14.158" endtime="20230628 17:25:16.749"/>
 </kw>
 <kw name="Maximize Browser Window" library="SeleniumLibrary">
 <doc>Maximizes current browser window.</doc>
-<status status="PASS" starttime="20230628 11:44:34.137" endtime="20230628 11:44:34.262"/>
+<status status="PASS" starttime="20230628 17:25:16.750" endtime="20230628 17:25:16.882"/>
 </kw>
-<status status="PASS" starttime="20230628 11:44:31.714" endtime="20230628 11:44:34.262"/>
+<status status="PASS" starttime="20230628 17:25:14.156" endtime="20230628 17:25:16.882"/>
 </kw>
 <test id="s1-s1-t1" name="Dashboard Constructeur" line="131">
 <kw name="EXTRACT JSON TO DICTIONNARY" library="utils">
-<var>${data_1}</var>
-<arg>data\\Dashboard_Constructeur_1.json</arg>
+<var>&amp;{data}</var>
+<arg>data\\Dashboard_Constructeur.json</arg>
 <kw name="Get Value From Json" library="utils">
 <var>${data}</var>
 <arg>${path_json}</arg>
-<msg timestamp="20230628 11:44:34.268" level="INFO">${data} = {'Nom': 'Constructeur numéro 1', 'Préfixe MAC': ''}</msg>
-<status status="PASS" starttime="20230628 11:44:34.267" endtime="20230628 11:44:34.269"/>
+<msg timestamp="20230628 17:25:16.885" level="INFO">${data} = {'Dashboard_constructeur_1': {'Nom': 'Constructeur numéro 1', 'Préfixe MAC': ''}, 'Dashboard_constructeur_1Bis': {'Nom': 'Constructeur numéro 1 Bis', 'Préfixe MAC': '00:20:d3'}, 'Dashboard_constructeu...</msg>
+<status status="PASS" starttime="20230628 17:25:16.885" endtime="20230628 17:25:16.886"/>
 </kw>
 <kw name="Log" library="BuiltIn">
 <arg>${data}</arg>
 <doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230628 11:44:34.270" level="INFO">{'Nom': 'Constructeur numéro 1', 'Préfixe MAC': ''}</msg>
-<status status="PASS" starttime="20230628 11:44:34.269" endtime="20230628 11:44:34.270"/>
+<msg timestamp="20230628 17:25:16.887" level="INFO">{'Dashboard_constructeur_1': {'Nom': 'Constructeur numéro 1', 'Préfixe MAC': ''}, 'Dashboard_constructeur_1Bis': {'Nom': 'Constructeur numéro 1 Bis', 'Préfixe MAC': '00:20:d3'}, 'Dashboard_constructeur_2': {'Nom': 'Constructeur numéro 2', 'Préfixe MAC': '00:20:d3'}}</msg>
+<status status="PASS" starttime="20230628 17:25:16.886" endtime="20230628 17:25:16.888"/>
 </kw>
-<msg timestamp="20230628 11:44:34.271" level="INFO">${data_1} = {'Nom': 'Constructeur numéro 1', 'Préfixe MAC': ''}</msg>
-<status status="PASS" starttime="20230628 11:44:34.265" endtime="20230628 11:44:34.271"/>
-</kw>
-<kw name="EXTRACT JSON TO DICTIONNARY" library="utils">
-<var>${data_1bis}</var>
-<arg>data\\Dashboard_Constructeur_1bis.json</arg>
-<kw name="Get Value From Json" library="utils">
-<var>${data}</var>
-<arg>${path_json}</arg>
-<msg timestamp="20230628 11:44:34.275" level="INFO">${data} = {'Nom': 'Constructeur numéro 1 Bis', 'Préfixe MAC': '00:20:d3'}</msg>
-<status status="PASS" starttime="20230628 11:44:34.273" endtime="20230628 11:44:34.275"/>
-</kw>
-<kw name="Log" library="BuiltIn">
-<arg>${data}</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230628 11:44:34.277" level="INFO">{'Nom': 'Constructeur numéro 1 Bis', 'Préfixe MAC': '00:20:d3'}</msg>
-<status status="PASS" starttime="20230628 11:44:34.276" endtime="20230628 11:44:34.277"/>
-</kw>
-<msg timestamp="20230628 11:44:34.278" level="INFO">${data_1bis} = {'Nom': 'Constructeur numéro 1 Bis', 'Préfixe MAC': '00:20:d3'}</msg>
-<status status="PASS" starttime="20230628 11:44:34.272" endtime="20230628 11:44:34.278"/>
-</kw>
-<kw name="EXTRACT JSON TO DICTIONNARY" library="utils">
-<var>${data_2}</var>
-<arg>data\\Dashboard_Constructeur_2.json</arg>
-<kw name="Get Value From Json" library="utils">
-<var>${data}</var>
-<arg>${path_json}</arg>
-<msg timestamp="20230628 11:44:34.281" level="INFO">${data} = {'Nom': 'Constructeur numéro 2', 'Préfixe MAC': '00:20:d3'}</msg>
-<status status="PASS" starttime="20230628 11:44:34.280" endtime="20230628 11:44:34.282"/>
-</kw>
-<kw name="Log" library="BuiltIn">
-<arg>${data}</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230628 11:44:34.283" level="INFO">{'Nom': 'Constructeur numéro 2', 'Préfixe MAC': '00:20:d3'}</msg>
-<status status="PASS" starttime="20230628 11:44:34.282" endtime="20230628 11:44:34.284"/>
-</kw>
-<msg timestamp="20230628 11:44:34.284" level="INFO">${data_2} = {'Nom': 'Constructeur numéro 2', 'Préfixe MAC': '00:20:d3'}</msg>
-<status status="PASS" starttime="20230628 11:44:34.279" endtime="20230628 11:44:34.285"/>
-</kw>
-<kw name="Set Variable" library="BuiltIn">
-<var>@{all_noms}</var>
-<arg>${data_1["Nom"]}</arg>
-<arg>${data_1bis["Nom"]}</arg>
-<arg>${data_2["Nom"]}</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20230628 11:44:34.289" level="INFO">@{all_noms} = [ Constructeur numéro 1 | Constructeur numéro 1 Bis | Constructeur numéro 2 ]</msg>
-<status status="PASS" starttime="20230628 11:44:34.287" endtime="20230628 11:44:34.290"/>
+<msg timestamp="20230628 17:25:16.889" level="INFO">&amp;{data} = { Dashboard_constructeur_1={'Nom': 'Constructeur numéro 1', 'Préfixe MAC': ''} | Dashboard_constructeur_1Bis={'Nom': 'Constructeur numéro 1 Bis', 'Préfixe MAC': '00:20:d3'} | Dashboard_constructeur_2=...</msg>
+<status status="PASS" starttime="20230628 17:25:16.884" endtime="20230628 17:25:16.889"/>
 </kw>
 <kw name="Verify Dashboard Menu" library="front">
 <kw name="Wait Until Page Contains Element" library="SeleniumLibrary">
 <arg>${bonjour_message}</arg>
 <doc>Waits until the element ``locator`` appears on the current page.</doc>
-<status status="PASS" starttime="20230628 11:44:34.292" endtime="20230628 11:44:34.312"/>
+<status status="PASS" starttime="20230628 17:25:16.893" endtime="20230628 17:25:16.915"/>
 </kw>
 <kw name="Get Text" library="SeleniumLibrary">
 <var>${bonjour_text}</var>
 <arg>${bonjour_message}</arg>
 <doc>Returns the text value of the element identified by ``locator``.</doc>
-<msg timestamp="20230628 11:44:34.348" level="INFO">${bonjour_text} = Bonjour admin !</msg>
-<status status="PASS" starttime="20230628 11:44:34.312" endtime="20230628 11:44:34.348"/>
+<msg timestamp="20230628 17:25:16.953" level="INFO">${bonjour_text} = Bonjour admin !</msg>
+<status status="PASS" starttime="20230628 17:25:16.916" endtime="20230628 17:25:16.953"/>
 </kw>
 <kw name="LOG CHECK GOOD" library="utils">
 <arg>${bonjour_text}</arg>
@@ -100,133 +55,356 @@
 <arg>level=WARN</arg>
 <arg>html=True</arg>
 <doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230628 11:44:34.351" level="WARN" html="true">&lt;h3 style="color: green;"&gt;Bonjour admin !&lt;/h3&gt;</msg>
-<status status="PASS" starttime="20230628 11:44:34.350" endtime="20230628 11:44:34.357"/>
+<msg timestamp="20230628 17:25:16.958" level="WARN" html="true">&lt;h3 style="color: green;"&gt;Bonjour admin !&lt;/h3&gt;</msg>
+<status status="PASS" starttime="20230628 17:25:16.956" endtime="20230628 17:25:16.966"/>
 </kw>
-<status status="PASS" starttime="20230628 11:44:34.349" endtime="20230628 11:44:34.358"/>
+<status status="PASS" starttime="20230628 17:25:16.953" endtime="20230628 17:25:16.967"/>
 </kw>
-<status status="PASS" starttime="20230628 11:44:34.291" endtime="20230628 11:44:34.359"/>
+<status status="PASS" starttime="20230628 17:25:16.890" endtime="20230628 17:25:16.967"/>
 </kw>
-<kw name="Go To Constructeur Menu" library="constructeur">
-<kw name="Wait Until Page Contains Element" library="SeleniumLibrary">
-<arg>${contructeur_menu}</arg>
-<doc>Waits until the element ``locator`` appears on the current page.</doc>
-<status status="PASS" starttime="20230628 11:44:34.362" endtime="20230628 11:44:34.397"/>
-</kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<arg>${contructeur_menu}</arg>
-<doc>Click the element identified by ``locator``.</doc>
-<msg timestamp="20230628 11:44:34.400" level="INFO">Clicking element '//a[@href="https://anyway.qal.covage.com/constructors" and @class="nav-link"]'.</msg>
-<status status="PASS" starttime="20230628 11:44:34.398" endtime="20230628 11:44:34.833"/>
-</kw>
-<kw name="Wait Until Page Contains Element" library="SeleniumLibrary">
-<arg>${constructeur_creation}</arg>
-<doc>Waits until the element ``locator`` appears on the current page.</doc>
-<status status="PASS" starttime="20230628 11:44:34.833" endtime="20230628 11:44:34.852"/>
-</kw>
-<kw name="Wait Until Page Contains Element" library="SeleniumLibrary">
-<arg>${constructeur_text}</arg>
-<doc>Waits until the element ``locator`` appears on the current page.</doc>
-<status status="PASS" starttime="20230628 11:44:34.852" endtime="20230628 11:44:34.864"/>
-</kw>
-<kw name="LOG CHECK GOOD" library="utils">
-<arg>Go to contructeurs menu</arg>
-<kw name="Log" library="BuiltIn">
-<arg>&lt;h3 style="color: green;"&gt;${message}&lt;/h3&gt;</arg>
-<arg>level=WARN</arg>
-<arg>html=True</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230628 11:44:34.866" level="WARN" html="true">&lt;h3 style="color: green;"&gt;Go to contructeurs menu&lt;/h3&gt;</msg>
-<status status="PASS" starttime="20230628 11:44:34.865" endtime="20230628 11:44:34.868"/>
-</kw>
-<status status="PASS" starttime="20230628 11:44:34.864" endtime="20230628 11:44:34.868"/>
-</kw>
-<status status="PASS" starttime="20230628 11:44:34.360" endtime="20230628 11:44:34.868"/>
-</kw>
-<kw name="Test" library="constructeur">
+<kw name="Get Column Index From Name" library="constructeur">
+<arg>NOM</arg>
 <kw name="Click And Check Modèle Equipments" library="constructeur">
 <kw name="Click Modèle" library="constructeur">
 <kw name="Click Element" library="SeleniumLibrary">
 <arg>//*[@id="sidebarNav"]/li[3]/a</arg>
 <doc>Click the element identified by ``locator``.</doc>
-<msg timestamp="20230628 11:44:34.871" level="INFO">Clicking element '//*[@id="sidebarNav"]/li[3]/a'.</msg>
-<status status="PASS" starttime="20230628 11:44:34.871" endtime="20230628 11:44:34.920"/>
+<msg timestamp="20230628 17:25:16.970" level="INFO">Clicking element '//*[@id="sidebarNav"]/li[3]/a'.</msg>
+<status status="PASS" starttime="20230628 17:25:16.969" endtime="20230628 17:25:17.077"/>
 </kw>
 <kw name="Sleep" library="BuiltIn">
 <arg>0.2</arg>
 <doc>Pauses the test executed for the given time.</doc>
-<msg timestamp="20230628 11:44:35.122" level="INFO">Slept 200 milliseconds</msg>
-<status status="PASS" starttime="20230628 11:44:34.920" endtime="20230628 11:44:35.122"/>
+<msg timestamp="20230628 17:25:17.278" level="INFO">Slept 200 milliseconds</msg>
+<status status="PASS" starttime="20230628 17:25:17.077" endtime="20230628 17:25:17.280"/>
 </kw>
-<status status="PASS" starttime="20230628 11:44:34.870" endtime="20230628 11:44:35.122"/>
+<status status="PASS" starttime="20230628 17:25:16.969" endtime="20230628 17:25:17.280"/>
 </kw>
 <kw name="Click Element" library="SeleniumLibrary">
 <arg>//*[@id="wrapper-0"]/ul/li[1]/a</arg>
 <doc>Click the element identified by ``locator``.</doc>
-<msg timestamp="20230628 11:44:35.123" level="INFO">Clicking element '//*[@id="wrapper-0"]/ul/li[1]/a'.</msg>
-<status status="PASS" starttime="20230628 11:44:35.122" endtime="20230628 11:44:35.563"/>
+<msg timestamp="20230628 17:25:17.283" level="INFO">Clicking element '//*[@id="wrapper-0"]/ul/li[1]/a'.</msg>
+<status status="PASS" starttime="20230628 17:25:17.280" endtime="20230628 17:25:17.768"/>
 </kw>
-<status status="PASS" starttime="20230628 11:44:34.869" endtime="20230628 11:44:35.564"/>
+<status status="PASS" starttime="20230628 17:25:16.968" endtime="20230628 17:25:17.768"/>
 </kw>
 <kw name="Wait Until Page Contains Element" library="SeleniumLibrary">
 <arg>xpath:/html/body/main/div[2]/div/div/div/div[2]/div/div[4]/table/thead/tr</arg>
 <doc>Waits until the element ``locator`` appears on the current page.</doc>
-<status status="PASS" starttime="20230628 11:44:35.564" endtime="20230628 11:44:35.582"/>
+<status status="PASS" starttime="20230628 17:25:17.769" endtime="20230628 17:25:17.799"/>
 </kw>
 <kw name="Get WebElements" library="SeleniumLibrary">
 <var>${elements}</var>
 <arg>xpath:/html/body/main/div[2]/div/div/div/div[2]/div/div[4]/table/thead/tr</arg>
 <doc>Returns a list of WebElement objects matching the ``locator``.</doc>
-<msg timestamp="20230628 11:44:35.592" level="INFO">${elements} = [&lt;selenium.webdriver.remote.webelement.WebElement (session="a904fa8e805c936216e9895cf004a481", element="4A8BEFAD47275F4CAEA55B7562ED3AC3_element_71")&gt;]</msg>
-<status status="PASS" starttime="20230628 11:44:35.582" endtime="20230628 11:44:35.592"/>
+<msg timestamp="20230628 17:25:17.811" level="INFO">${elements} = [&lt;selenium.webdriver.remote.webelement.WebElement (session="0dfb0ef6c2943a264d7902dd8032bef1", element="7BDB7B0C9AE5C3FD6FAB19C371F9BD9C_element_54")&gt;]</msg>
+<status status="PASS" starttime="20230628 17:25:17.799" endtime="20230628 17:25:17.813"/>
 </kw>
 <kw name="Log" library="BuiltIn">
 <arg>${elements}</arg>
 <doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230628 11:44:35.593" level="INFO">[&lt;selenium.webdriver.remote.webelement.WebElement (session="a904fa8e805c936216e9895cf004a481", element="4A8BEFAD47275F4CAEA55B7562ED3AC3_element_71")&gt;]</msg>
-<status status="PASS" starttime="20230628 11:44:35.592" endtime="20230628 11:44:35.593"/>
+<msg timestamp="20230628 17:25:17.815" level="INFO">[&lt;selenium.webdriver.remote.webelement.WebElement (session="0dfb0ef6c2943a264d7902dd8032bef1", element="7BDB7B0C9AE5C3FD6FAB19C371F9BD9C_element_54")&gt;]</msg>
+<status status="PASS" starttime="20230628 17:25:17.813" endtime="20230628 17:25:17.818"/>
 </kw>
 <kw name="Create List" library="BuiltIn">
-<var>@{noms}</var>
+<var>@{names}</var>
 <doc>Returns a list containing given items.</doc>
-<msg timestamp="20230628 11:44:35.594" level="INFO">@{noms} = [ ]</msg>
-<status status="PASS" starttime="20230628 11:44:35.593" endtime="20230628 11:44:35.594"/>
+<msg timestamp="20230628 17:25:17.819" level="INFO">@{names} = [ ]</msg>
+<status status="PASS" starttime="20230628 17:25:17.818" endtime="20230628 17:25:17.819"/>
 </kw>
 <for flavor="IN">
 <var>${element}</var>
 <value>@{elements}</value>
 <iter>
-<var name="${element}">&lt;selenium.webdriver.remote.webelement.WebElement (session="a904fa8e805c936216e9895cf004a481", element="4A8BEFAD47275F4CAEA55B7562ED3AC3_element_71")&gt;</var>
+<var name="${element}">&lt;selenium.webdriver.remote.webelement.WebElement (session="0dfb0ef6c2943a264d7902dd8032bef1", element="7BDB7B0C9AE5C3FD6FAB19C371F9BD9C_element_54")&gt;</var>
 <kw name="Get Text" library="SeleniumLibrary">
-<var>${nom}</var>
+<var>${name}</var>
 <arg>${element}</arg>
 <doc>Returns the text value of the element identified by ``locator``.</doc>
-<msg timestamp="20230628 11:44:35.614" level="INFO">${nom} = EQUIPEMENTIER
+<msg timestamp="20230628 17:25:17.852" level="INFO">${name} = EQUIPEMENTIER
 NOM
 ABRÉVIATION
 RÉFÉRENCE
 ACTIF / PASSIF
 NB SLOTS
 DÉPLOYÉ</msg>
-<status status="PASS" starttime="20230628 11:44:35.595" endtime="20230628 11:44:35.614"/>
+<status status="PASS" starttime="20230628 17:25:17.822" endtime="20230628 17:25:17.852"/>
 </kw>
 <kw name="Append To List" library="Collections">
-<arg>${noms}</arg>
-<arg>${nom}</arg>
+<arg>${names}</arg>
+<arg>${name}</arg>
 <doc>Adds ``values`` to the end of ``list``.</doc>
-<status status="PASS" starttime="20230628 11:44:35.614" endtime="20230628 11:44:35.615"/>
+<status status="PASS" starttime="20230628 17:25:17.853" endtime="20230628 17:25:17.854"/>
 </kw>
-<status status="PASS" starttime="20230628 11:44:35.594" endtime="20230628 11:44:35.615"/>
+<status status="PASS" starttime="20230628 17:25:17.821" endtime="20230628 17:25:17.854"/>
 </iter>
-<status status="PASS" starttime="20230628 11:44:35.594" endtime="20230628 11:44:35.615"/>
+<status status="PASS" starttime="20230628 17:25:17.819" endtime="20230628 17:25:17.854"/>
 </for>
-<status status="PASS" starttime="20230628 11:44:34.869" endtime="20230628 11:44:35.615"/>
+<kw name="Split String" library="String">
+<var>@{names}</var>
+<arg>${name}</arg>
+<arg>\n</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<msg timestamp="20230628 17:25:17.855" level="INFO">@{names} = [ EQUIPEMENTIER | NOM | ABRÉVIATION | RÉFÉRENCE | ACTIF / PASSIF | NB SLOTS | DÉPLOYÉ ]</msg>
+<status status="PASS" starttime="20230628 17:25:17.855" endtime="20230628 17:25:17.856"/>
 </kw>
-<status status="PASS" starttime="20230628 11:44:34.262" endtime="20230628 11:44:35.616"/>
+<for flavor="IN ENUMERATE">
+<var>${index}</var>
+<var>${name}</var>
+<value>@{names}</value>
+<iter>
+<var name="${index}">0</var>
+<var name="${name}">EQUIPEMENTIER</var>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${test}</var>
+<arg>Should Be Equal</arg>
+<arg>${name_column}</arg>
+<arg>${name}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${name_column}</arg>
+<arg>${name}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<msg timestamp="20230628 17:25:17.859" level="FAIL">NOM != EQUIPEMENTIER</msg>
+<status status="FAIL" starttime="20230628 17:25:17.858" endtime="20230628 17:25:17.860"/>
+</kw>
+<msg timestamp="20230628 17:25:17.860" level="INFO">${test} = False</msg>
+<status status="PASS" starttime="20230628 17:25:17.857" endtime="20230628 17:25:17.861"/>
+</kw>
+<if>
+<branch type="IF" condition="${test}">
+<kw name="Set Variable" library="BuiltIn">
+<var>${return}</var>
+<arg>${index}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230628 17:25:17.861" endtime="20230628 17:25:17.861"/>
+</kw>
+<status status="NOT RUN" starttime="20230628 17:25:17.861" endtime="20230628 17:25:17.863"/>
+</branch>
+<status status="PASS" starttime="20230628 17:25:17.861" endtime="20230628 17:25:17.863"/>
+</if>
+<status status="PASS" starttime="20230628 17:25:17.857" endtime="20230628 17:25:17.863"/>
+</iter>
+<iter>
+<var name="${index}">1</var>
+<var name="${name}">NOM</var>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${test}</var>
+<arg>Should Be Equal</arg>
+<arg>${name_column}</arg>
+<arg>${name}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${name_column}</arg>
+<arg>${name}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20230628 17:25:17.865" endtime="20230628 17:25:17.865"/>
+</kw>
+<msg timestamp="20230628 17:25:17.866" level="INFO">${test} = True</msg>
+<status status="PASS" starttime="20230628 17:25:17.864" endtime="20230628 17:25:17.866"/>
+</kw>
+<if>
+<branch type="IF" condition="${test}">
+<kw name="Set Variable" library="BuiltIn">
+<var>${return}</var>
+<arg>${index}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230628 17:25:17.868" level="INFO">${return} = 1</msg>
+<status status="PASS" starttime="20230628 17:25:17.867" endtime="20230628 17:25:17.868"/>
+</kw>
+<status status="PASS" starttime="20230628 17:25:17.866" endtime="20230628 17:25:17.868"/>
+</branch>
+<status status="PASS" starttime="20230628 17:25:17.866" endtime="20230628 17:25:17.868"/>
+</if>
+<status status="PASS" starttime="20230628 17:25:17.863" endtime="20230628 17:25:17.868"/>
+</iter>
+<iter>
+<var name="${index}">2</var>
+<var name="${name}">ABRÉVIATION</var>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${test}</var>
+<arg>Should Be Equal</arg>
+<arg>${name_column}</arg>
+<arg>${name}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${name_column}</arg>
+<arg>${name}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<msg timestamp="20230628 17:25:17.872" level="FAIL">NOM != ABRÉVIATION</msg>
+<status status="FAIL" starttime="20230628 17:25:17.871" endtime="20230628 17:25:17.873"/>
+</kw>
+<msg timestamp="20230628 17:25:17.874" level="INFO">${test} = False</msg>
+<status status="PASS" starttime="20230628 17:25:17.869" endtime="20230628 17:25:17.874"/>
+</kw>
+<if>
+<branch type="IF" condition="${test}">
+<kw name="Set Variable" library="BuiltIn">
+<var>${return}</var>
+<arg>${index}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230628 17:25:17.875" endtime="20230628 17:25:17.875"/>
+</kw>
+<status status="NOT RUN" starttime="20230628 17:25:17.874" endtime="20230628 17:25:17.875"/>
+</branch>
+<status status="PASS" starttime="20230628 17:25:17.874" endtime="20230628 17:25:17.876"/>
+</if>
+<status status="PASS" starttime="20230628 17:25:17.869" endtime="20230628 17:25:17.876"/>
+</iter>
+<iter>
+<var name="${index}">3</var>
+<var name="${name}">RÉFÉRENCE</var>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${test}</var>
+<arg>Should Be Equal</arg>
+<arg>${name_column}</arg>
+<arg>${name}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${name_column}</arg>
+<arg>${name}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<msg timestamp="20230628 17:25:17.878" level="FAIL">NOM != RÉFÉRENCE</msg>
+<status status="FAIL" starttime="20230628 17:25:17.877" endtime="20230628 17:25:17.881"/>
+</kw>
+<msg timestamp="20230628 17:25:17.881" level="INFO">${test} = False</msg>
+<status status="PASS" starttime="20230628 17:25:17.876" endtime="20230628 17:25:17.881"/>
+</kw>
+<if>
+<branch type="IF" condition="${test}">
+<kw name="Set Variable" library="BuiltIn">
+<var>${return}</var>
+<arg>${index}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230628 17:25:17.885" endtime="20230628 17:25:17.885"/>
+</kw>
+<status status="NOT RUN" starttime="20230628 17:25:17.883" endtime="20230628 17:25:17.885"/>
+</branch>
+<status status="PASS" starttime="20230628 17:25:17.881" endtime="20230628 17:25:17.886"/>
+</if>
+<status status="PASS" starttime="20230628 17:25:17.876" endtime="20230628 17:25:17.886"/>
+</iter>
+<iter>
+<var name="${index}">4</var>
+<var name="${name}">ACTIF / PASSIF</var>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${test}</var>
+<arg>Should Be Equal</arg>
+<arg>${name_column}</arg>
+<arg>${name}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${name_column}</arg>
+<arg>${name}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<msg timestamp="20230628 17:25:17.888" level="FAIL">NOM != ACTIF / PASSIF</msg>
+<status status="FAIL" starttime="20230628 17:25:17.887" endtime="20230628 17:25:17.889"/>
+</kw>
+<msg timestamp="20230628 17:25:17.890" level="INFO">${test} = False</msg>
+<status status="PASS" starttime="20230628 17:25:17.886" endtime="20230628 17:25:17.891"/>
+</kw>
+<if>
+<branch type="IF" condition="${test}">
+<kw name="Set Variable" library="BuiltIn">
+<var>${return}</var>
+<arg>${index}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230628 17:25:17.892" endtime="20230628 17:25:17.893"/>
+</kw>
+<status status="NOT RUN" starttime="20230628 17:25:17.891" endtime="20230628 17:25:17.893"/>
+</branch>
+<status status="PASS" starttime="20230628 17:25:17.891" endtime="20230628 17:25:17.893"/>
+</if>
+<status status="PASS" starttime="20230628 17:25:17.886" endtime="20230628 17:25:17.894"/>
+</iter>
+<iter>
+<var name="${index}">5</var>
+<var name="${name}">NB SLOTS</var>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${test}</var>
+<arg>Should Be Equal</arg>
+<arg>${name_column}</arg>
+<arg>${name}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${name_column}</arg>
+<arg>${name}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<msg timestamp="20230628 17:25:17.896" level="FAIL">NOM != NB SLOTS</msg>
+<status status="FAIL" starttime="20230628 17:25:17.895" endtime="20230628 17:25:17.898"/>
+</kw>
+<msg timestamp="20230628 17:25:17.898" level="INFO">${test} = False</msg>
+<status status="PASS" starttime="20230628 17:25:17.894" endtime="20230628 17:25:17.899"/>
+</kw>
+<if>
+<branch type="IF" condition="${test}">
+<kw name="Set Variable" library="BuiltIn">
+<var>${return}</var>
+<arg>${index}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230628 17:25:17.900" endtime="20230628 17:25:17.901"/>
+</kw>
+<status status="NOT RUN" starttime="20230628 17:25:17.899" endtime="20230628 17:25:17.901"/>
+</branch>
+<status status="PASS" starttime="20230628 17:25:17.899" endtime="20230628 17:25:17.901"/>
+</if>
+<status status="PASS" starttime="20230628 17:25:17.894" endtime="20230628 17:25:17.901"/>
+</iter>
+<iter>
+<var name="${index}">6</var>
+<var name="${name}">DÉPLOYÉ</var>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<var>${test}</var>
+<arg>Should Be Equal</arg>
+<arg>${name_column}</arg>
+<arg>${name}</arg>
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${name_column}</arg>
+<arg>${name}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<msg timestamp="20230628 17:25:17.906" level="FAIL">NOM != DÉPLOYÉ</msg>
+<status status="FAIL" starttime="20230628 17:25:17.904" endtime="20230628 17:25:17.908"/>
+</kw>
+<msg timestamp="20230628 17:25:17.908" level="INFO">${test} = False</msg>
+<status status="PASS" starttime="20230628 17:25:17.903" endtime="20230628 17:25:17.909"/>
+</kw>
+<if>
+<branch type="IF" condition="${test}">
+<kw name="Set Variable" library="BuiltIn">
+<var>${return}</var>
+<arg>${index}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230628 17:25:17.910" endtime="20230628 17:25:17.911"/>
+</kw>
+<status status="NOT RUN" starttime="20230628 17:25:17.909" endtime="20230628 17:25:17.911"/>
+</branch>
+<status status="PASS" starttime="20230628 17:25:17.909" endtime="20230628 17:25:17.911"/>
+</if>
+<status status="PASS" starttime="20230628 17:25:17.901" endtime="20230628 17:25:17.911"/>
+</iter>
+<status status="PASS" starttime="20230628 17:25:17.856" endtime="20230628 17:25:17.911"/>
+</for>
+<kw name="Evaluate" library="BuiltIn">
+<var>${return}</var>
+<arg>${return} +1</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230628 17:25:17.912" level="INFO">${return} = 2</msg>
+<status status="PASS" starttime="20230628 17:25:17.911" endtime="20230628 17:25:17.913"/>
+</kw>
+<status status="PASS" starttime="20230628 17:25:16.967" endtime="20230628 17:25:17.913"/>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<arg>1s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<msg timestamp="20230628 17:25:18.915" level="INFO">Slept 1 second</msg>
+<status status="PASS" starttime="20230628 17:25:17.914" endtime="20230628 17:25:18.915"/>
+</kw>
+<status status="PASS" starttime="20230628 17:25:16.882" endtime="20230628 17:25:18.916"/>
 </test>
-<status status="PASS" starttime="20230628 11:44:31.376" endtime="20230628 11:44:35.618"/>
+<status status="PASS" starttime="20230628 17:25:13.744" endtime="20230628 17:25:18.919"/>
 </suite>
-<status status="PASS" starttime="20230628 11:44:31.353" endtime="20230628 11:44:35.620"/>
+<status status="PASS" starttime="20230628 17:25:13.718" endtime="20230628 17:25:18.922"/>
 </suite>
 <statistics>
 <total>
@@ -240,7 +418,6 @@ DÉPLOYÉ</msg>
 </suite>
 </statistics>
 <errors>
-<msg timestamp="20230628 11:44:34.351" level="WARN" html="true">&lt;h3 style="color: green;"&gt;Bonjour admin !&lt;/h3&gt;</msg>
-<msg timestamp="20230628 11:44:34.866" level="WARN" html="true">&lt;h3 style="color: green;"&gt;Go to contructeurs menu&lt;/h3&gt;</msg>
+<msg timestamp="20230628 17:25:16.958" level="WARN" html="true">&lt;h3 style="color: green;"&gt;Bonjour admin !&lt;/h3&gt;</msg>
 </errors>
 </robot>
