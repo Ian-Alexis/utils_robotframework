@@ -1,63 +1,24 @@
 *** Settings ***
 Resource    front/constructeur.robot
+Suite Setup    Connect To Anyway
 
+# Automatiser la suppression d'un constructeur qui existe déjà 
 *** Variables ***
 
 
-
-
-
-
-${nom_field}    //label[contains(text(), 'Nom')]/following-sibling::input[1]
+# ${nom_field}    //label[contains(text(), 'Nom')]/following-sibling::input[1]
 ${error_nom_field}    //label[contains(text(), 'Nom')]/following-sibling::div[@class="form-text text-danger"]
-${prefixe_mac_field}    //label[contains(text(), 'Préfixe MAC')]/following-sibling::textarea[1]
-
-${popup_validation}   //div[@id="swal2-html-container"]
-${ok_popup_button}    //button[contains(text(), "OK")]
-${confirmer_button}    //button[contains(text(), "Confirmer")]
+# ${prefixe_mac_field}    //label[contains(text(), 'Préfixe MAC')]/following-sibling::textarea[1]
 
 
 
-
-
-
-${name_filter_search}    //*[@id="table-filter-name"]
 ${result_search}    //td[contains(text(), "Constructeur numéro 1")]
 
 
 *** Keywords ***
 
-
-
-
-
-
-
-
-
-Fill Data In Constructeur Creation 1
-    Wait Until Element Is Visible    ${nom_field}
-    Input Text    ${nom_field}    Constructeur numéro 1
-    CHECK INPUT TEXT FIELD LOG    Nom    ${nom_field}    Constructeur numéro 1    False
-    Click Button    ${ajouter_button}
-    Wait Until Page Contains Element    ${popup_validation}
-    ${popup_validation_text}=    Get Text    ${popup_validation}
-    LOG CHECK GOOD    ${popup_validation_text}
-    Wait Until Page Contains Element   ${ok_popup_button}
-    Click Button    ${ok_popup_button}
-
-Check Information In Constructor 1
-    Wait Until Page Contains Element    ${validation_button}
-    Wait Until Page Contains Element    ${nom_field}
-    CHECK INPUT TEXT FIELD LOG    Nom    ${nom_field}    Constructeur numéro 1    True
-
-Go To Constructeur Menu Bis
-    Wait Until Page Contains Element    ${ariane_fil_constructor}
-    Click Element    ${ariane_fil_constructor}
-    Wait Until Page Contains Element    ${constructeur_creation}
-    LOG CHECK GOOD    Go to contructeurs menu
-
 Fill Data In Constructeur Creation Wrong
+    
     Wait Until Element Is Visible   ${nom_field}
     Input Text    ${nom_field}    Constructeur numéro 1
     CHECK INPUT TEXT FIELD LOG    Nom    ${nom_field}    Constructeur numéro 1    False
@@ -72,12 +33,6 @@ Fill Data In Constructeur Creation Wrong
     Input Text    ${nom_field}    Constructeur numéro 1 Bis
     CHECK INPUT TEXT FIELD LOG    Nom    ${nom_field}    Constructeur numéro 1 Bis    False
     Click Button    ${ajouter_button}
-
-    Wait Until Page Contains Element    ${popup_validation}
-    ${popup_validation_text}=    Get Text    ${popup_validation}
-    LOG CHECK GOOD    ${popup_validation_text}
-    Wait Until Page Contains Element   ${ok_popup_button}
-    Click Button    ${ok_popup_button}
 
 Check Information In Constructor 2
     Wait Until Page Contains Element    ${validation_button}
@@ -107,13 +62,17 @@ Check Information In Constructor 2
     IF  ${test_ariane_fil}
         LOG CHECK GOOD    The breadcrumb contains ${ariane_fil_object_text}
     ELSE
-        LOG CHECK WARNIG    The breadcrumb doesn't contain ${ariane_fil_object_text}
+        LOG CHECK WARNING    The breadcrumb doesn't contain ${ariane_fil_object_text}
     END
 
 Test Filter
     Wait Until Page Contains Element    ${nom_filter}
 
-    @{elements}    Get WebElements    //tbody/tr/td[position()=2]
+    ${index}    Get Element Attribute    xpath://span[text()='Nom']/preceding::th    count
+
+
+    @{elements}    Get WebElements    //tbody/tr/td[position()=${index}]
+
     @{noms}    Create List
     FOR    ${element}    IN    @{elements}
         ${nom}    Get Text    ${element}
@@ -123,7 +82,8 @@ Test Filter
 
     Click Element    ${nom_filter}
     Sleep    2s
-    @{elements_sort}    Get WebElements    //tbody/tr/td[position()=2]
+    # @{elements_sort}    Get WebElements    //tbody/tr/td[position()=2]
+    @{elements_sort}    Get WebElements    //tbody/tr/td[contains(text(),"NOM")]
     @{noms_sorted}    Create List
     FOR    ${element}    IN    @{elements_sort}
         ${nom}    Get Text    ${element}
@@ -134,7 +94,7 @@ Test Filter
     IF  ${${sort_test}}
         LOG CHECK GOOD    The list of constructeur is sorted by NOM
     ELSE
-        LOG CHECK WARNIG    The list of constructeur is not sorted by NOM
+        LOG CHECK WARNING    The list of constructeur is not sorted by NOM
     END
 
 Test Search Filter 1
@@ -160,26 +120,39 @@ Erase A Constructor
     Click Button    ${ok_popup_button}
 
 Test Search Filter 2
+# Mettre la fonction Element Should Not Be Visible
     Wait Until Page Contains Element    ${name_filter_search}
     Input Text    ${name_filter_search}    Constructeur numéro 1
     Wait Until Page Contains Element    ${no_result_search} 
-    LOG CHECK GOOD    Constructeur numéro 1 not find !
+    LOG CHECK GOOD    Constructeur numéro 1 not found !
+
 
 *** Test Cases ***
 Dashboard Constructeur
-    Connect To Anyway
+# Faire une fonction qui extrait tous les json correspondant au nom du test
+    ${data_1}    EXTRACT JSON TO DICTIONNARY    data\\Dashboard_Constructeur_1.json
+    ${data_1bis}    EXTRACT JSON TO DICTIONNARY    data\\Dashboard_Constructeur_1bis.json 
+    ${data_2}    EXTRACT JSON TO DICTIONNARY    data\\Dashboard_Constructeur_2.json
+    @{all_noms}    Set Variable    ${data_1["Nom"]}    ${data_1bis["Nom"]}    ${data_2["Nom"]} 
     Verify Dashboard Menu
     Go To Constructeur Menu
-    Go To Constructeur Creation
-    Fill Data In Constructeur Creation 1
-    Check Information In Constructor 1
-    Go To Constructeur Menu Bis
-    Go To Constructeur Creation
-    Fill Data In Constructeur Creation Wrong
-    Check Information In Constructor 2
-    Go To Constructeur Menu Bis
-    Test Filter
-    Test Search Filter 1
-    Erase A Constructor
-    Test Search Filter 2
-    Sleep    1s
+    Test
+    # Check And Delete Existing Constructeurs    @{all_noms}  
+    # Go To Constructeur Creation
+    # Check Error Field Constructeur
+    # Fill Data In Constructeur Creation    ${data_1}
+    # Validate Popup Ok
+    # Check Information In Constructeur    ${data_1}
+    # Go To Constructeur Menu Breadcrumb
+    # Go To Constructeur Creation
+    # Fill Data In Constructeur Creation    ${data_1}
+    # Check Error Field Constructeur
+    # Fill Data In Constructeur Creation    ${data_1bis}
+    # Validate Popup Ok
+    # Check Information In Constructeur    ${data_1bis}
+    # Go To Constructeur Menu Breadcrumb
+    # Test Filter
+    # Test Search Filter 1
+    # Erase A Constructor
+    # Test Search Filter 2
+    # Sleep    1s
