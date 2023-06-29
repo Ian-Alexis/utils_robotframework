@@ -1,1 +1,70 @@
-/out/
+### Python ###
+
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+media
+current.py
+local.py
+
+# Unit test / coverage reports
+htmlcov
+.coverage
+coverage.xml
+
+# Sphinx documentation
+docs/_build/
+public
+
+# pyenv
+.python-version
+
+# celery beat schedule file
+celerybeat-schedule
+
+# Environments
+.venv
+env/
+
+### Vim ###
+# Swap
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# Session
+Session.vim
+
+# Temporary
+.netrwhist
+# Auto-generated tag files
+tags
+# Persistent undo
+[._]*.un~
+
+### VisualStudioCode ###
+.vscode
+.idea
+
+# Celery TMP files
+celerybeat-schedule.*
+out/
+environments/local.args
+*.env
+
+# Pabot
+.pabotsuitenames
+tmp/
+
+#out
+*.png
+log.html
+output.xml
+report.html
+
+
+pabot_results
