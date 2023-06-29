@@ -4,15 +4,11 @@ Resource    front.robot
 
 *** Variables ***
 ${contructeur_menu}    //a[@href="https://anyway.qal.covage.com/constructors" and @class="nav-link"]
-# ${nom_filter}    //div[span[contains(text(), "NOM")]]
-${nom_filter}    xpath:/html/body/main/div[2]/div/div/div/div[2]/div/div[4]/table/thead/tr/th[2]/div
 
 ${constructeur_creation}    //a[@href="https://anyway.qal.covage.com/constructors/create"]
 ${breadcrumb_constructeur}    //a[@href="https://anyway.qal.covage.com/constructors"][@class="text-decoration-none"]
 
 ${constructeur_text}    //h1[contains(text(),"Constructeur")]
-
-${name_filter_search}    //*[@id="table-filter-name"]
 
 ${nom_field}    
 ${prefixe_mac_field}
@@ -96,94 +92,3 @@ Fill Data In Constructeur
     Input Text    ${prefixe_mac_field}    ${data["Préfixe MAC"]}
     CHECK INPUT TEXT FIELD LOG    Préfixe MAC    ${prefixe_mac_field}    ${data["Préfixe MAC"]}    False
     Click Button    ${validation_button}
-    
-# Check And Delete Existing Constructeurs
-#     ${test_1}    Run Keyword And Return Status    Wait Until Page Contains    Constructeur numéro 1
-#     ${test_2}    Run Keyword And Return Status    Wait Until Page Contains    Constructeur numéro 2
-#     ${test_1bis}    Run Keyword And Return Status    Wait Until Page Contains    Constructeur numéro 1 Bis
-#     IF    ${test_1}
-#         Click Element    //td[contains(text(), 'Constructeur numéro 1')]
-#         Click Element    //*[@class="bi bi-trash3-fill"]
-#         Validate Popup Confirmer
-#         Validate Popup Ok
-#     END
-#     IF    ${test_1bis}
-#         Click Element    //td[contains(text(), 'Constructeur numéro 1 Bis')]
-#         Click Element    //*[@class="bi bi-trash3-fill"]
-#         Validate Popup Confirmer
-#         Validate Popup Ok
-#     END
-#     IF    ${test_2}
-#         Click Element    //td[contains(text(), 'Constructeur numéro 2')]
-#         Click Element    //*[@class="bi bi-trash3-fill"]
-#         Validate Popup Confirmer
-#         Validate Popup Ok
-#     END
-
-Check And Delete Existing Constructeurs
-    [Arguments]    &{nom_dict}
-    
-    # Sort List    ${all_noms}
-    # Reverse List    ${all_noms} 
-       
-    @{all_noms}    Create List
-
-    FOR    ${nom}    ${value}    IN    &{nom_dict}
-        Append To List    ${all_noms}    ${nom}
-    END
-    Sort List    ${all_noms}
-    Reverse List    ${all_noms}
-    Log    ${all_noms}
-    ${var}    Set Variable    ${nom_dict["Dashboard_constructeur_2"]}
-    Log    ${var["Nom"]}
-
-    FOR    ${test}    IN    @{all_noms}
-        Wait Until Page Contains Element    ${name_filter_search}
-        ${dict_test}    Set Variable    ${nom_dict["${test}"]}
-        Input Text    ${name_filter_search}    ${dict_test["Nom"]} 
-        ${test}    Run Keyword And Return Status    Wait Until Page Contains Element    //tr[td[contains(text(),'${dict_test["Nom"]}')]]    1s
-        IF    ${test}
-            Click Element    //tr[td[contains(text(),'${dict_test["Nom"]}')]]
-            Wait Until Page Contains Element    ${trash_logo}
-            Click Element    ${trash_logo}
-            Validate Popup Confirmer
-            Validate Popup Ok
-        END
-    END
-
-Get Column Index From Name
-    [Arguments]    ${name_column}
-
-    Click And Check Modèle Equipments    
-    Wait Until Page Contains Element    xpath:/html/body/main/div[2]/div/div/div/div[2]/div/div[4]/table/thead/tr
-
-    ${elements}    Get WebElements    xpath:/html/body/main/div[2]/div/div/div/div[2]/div/div[4]/table/thead/tr
-    Log    ${elements}
-
-    @{names}    Create List
-    FOR    ${element}    IN    @{elements}
-        ${name}    Get Text    ${element}
-        Append To List    ${names}    ${name}
-    END 
-    @{names}    Split String    ${name}    \n
-
-    FOR    ${index}    ${name}    IN ENUMERATE    @{names}
-        ${test}    Run Keyword And Return Status    Should Be Equal    ${name_column}    ${name}
-        IF    ${test}
-            ${return}    Set Variable    ${index}
-        END
-    END
-
-    ${return}    Evaluate    ${return} +1
-
-    [Return]   ${return}
-            
-
-
-Click Modèle
-    Click Element    //*[@id="sidebarNav"]/li[3]/a
-    Sleep    0.2
-
-Click And Check Modèle Equipments
-    Click Modèle
-    Click Element    //*[@id="wrapper-0"]/ul/li[1]/a

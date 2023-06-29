@@ -7,8 +7,6 @@ Library    Collections
 Library    JSONLibrary
 Library    utils.py
 
-
-
 # pip install --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --trusted-host pypi.org bs4
 
 *** Keywords ***
@@ -90,7 +88,7 @@ GET INDEX OF ELEMENT
 
     FOR    ${index}    ${value}    IN ENUMERATE    @{list}
 
-        ${test}    Run Keyword And Return Status    Should Be Equal    '${element}' == '${value}'
+        ${test}    Run Keyword And Return Status    Should Be Equal    ${element}    ${value}
 
         IF    ${test}
         
@@ -98,5 +96,5 @@ GET INDEX OF ELEMENT
             Return From Keyword  ${index}
 
         Fail  L'élément n'est pas dans la liste.FOR
-
+        END
     END

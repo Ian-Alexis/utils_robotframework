@@ -63,3 +63,137 @@ Validate Popup Confirmer
     Click Button    ${confirmer_button}
     Sleep    1s
     Validate Popup Ok
+
+Get Column Index From Name
+    [Arguments]    ${name_column}
+
+    ${return}    Set Variable    False
+    Wait Until Page Contains Element    //thead[tr]
+    ${elements}    Get WebElements    //thead[tr]
+
+    @{names}    Create List
+    FOR    ${element}    IN    @{elements}
+        ${name}    Get Text    ${element}
+        Append To List    ${names}    ${name}
+    END 
+    @{names}    Split String    ${name}    \n
+
+    FOR    ${index}    ${name}    IN ENUMERATE    @{names}
+        ${test}    Run Keyword And Return Status    Should Be Equal    ${name_column}    ${name}
+        IF    ${test}
+            ${return}    Set Variable    ${index}
+            ${return}    Evaluate    ${return} + 2
+        END
+    END
+
+    IF    '${return}'=='False'
+        Log    ${name_column} not found
+        Fail
+    END    
+
+    [Return]   ${return}
+            
+
+Test Filter
+    [Arguments]    ${filter_name}
+
+    Wait Until Page Contains Element    //thead
+    ${index}    Get Column Index From Name    ${filter_name}
+    ${trier_button}    Set Variable    //thead/tr/th[position()=${index}]/div[@style="cursor:pointer;"]
+    ${column_xpath}    Set Variable    //tbody/tr/td[position()=${index}]
+    @{elements}    Get WebElements    ${column_xpath}
+
+    @{noms}    Create List
+    FOR    ${element}    IN    @{elements}
+        ${nom}    Get Text    ${element}
+        Append To List    ${noms}    ${nom}
+    END
+    Remove From List   ${noms}    0
+    Sort List   ${noms}
+
+    Click Element    ${trier_button}
+    Sleep    1s
+    @{elements_sort}    Get WebElements    ${column_xpath}
+    @{noms_sorted}    Create List
+    FOR    ${element}    IN    @{elements_sort}
+        ${nom}    Get Text    ${element}
+        Append To List    ${noms_sorted}    ${nom}
+    END
+    Remove From List   ${noms_sorted}    0
+
+    ${sort_test}=    Run Keyword And Return Status    Should Be True    ${noms} == ${noms_sorted}
+    IF  ${sort_test}
+        LOG CHECK GOOD    The list of constructeur is sorted by NOM
+    ELSE
+        LOG CHECK WARNING    The list of constructeur is not sorted by NOM
+    END
+
+Test Search Filter
+    [Arguments]    ${filter_name}    ${input}    ${find}
+
+    ${index}    Get Column Index From Name    ${filter_name}
+    ${search_xpath}    Set Variable    //tbody/tr[1]/td[position()=${index}]/div/input
+    Wait Until Page Contains Element    ${search_xpath}
+    Input Text    ${search_xpath}    ${input}
+    ${result_search}    Set Variable    //td[contains(text(), "${input}")]
+    ${test}    Run Keyword And Return Status    Wait Until Page Contains Element    ${result_search}     1s
+    IF   '${test}'=='${find}'
+        IF  ${test}
+            LOG CHECK GOOD    ${input} found !
+        ELSE
+            LOG CHECK GOOD    ${input} not found !       
+        END     
+    ELSE
+        IF    ${test}
+            LOG CHECK WARNING    ${input} found !
+        ELSE 
+            LOG CHECK WARNING    ${input} not found !
+        END
+    END
+
+    [Return]     ${result_search}
+
+
+Check And Delete Existing Elements 
+    [Arguments]    ${filter_name}    &{nom_dict}    
+
+    ${index}    Get Column Index From Name    ${filter_name}
+    ${search_xpath}    Set Variable    //tbody/tr[1]/td[position()=${index}]/div/input
+
+    # Sort List    ${all_noms}
+    # Reverse List    ${all_noms} 
+       
+    @{all_noms}    Create List
+
+    FOR    ${nom}    ${value}    IN    &{nom_dict}
+        Append To List    ${all_noms}    ${nom}
+    END
+    Sort List    ${all_noms}
+    Reverse List    ${all_noms}
+    Log    ${all_noms}
+    ${var}    Set Variable    ${nom_dict["Dashboard_constructeur_2"]}
+    Log    ${var["Nom"]}
+
+    FOR    ${test}    IN    @{all_noms}
+        Wait Until Page Contains Element    ${search_xpath}
+        ${dict_test}    Set Variable    ${nom_dict["${test}"]}
+        Input Text    ${search_xpath}    ${dict_test["Nom"]} 
+        ${test}    Run Keyword And Return Status    Wait Until Page Contains Element    //tr[td[contains(text(),'${dict_test["Nom"]}')]]    1s
+        IF    ${test}
+            Click Element    //tr[td[normalize-space()='${dict_test["Nom"]}']]
+            Erase Element
+        END
+    END
+
+Erase Element
+    [Arguments]    ${xpath}=${False}
+
+    IF    '${xpath}'!='False'
+        Wait Until Page Contains Element    ${xpath}
+        Click Element    ${xpath}
+    END
+
+    Wait Until Page Contains Element    ${trash_logo}
+    Click Element    ${trash_logo}
+    Validate Popup Confirmer
+    Validate Popup Ok
