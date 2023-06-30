@@ -39,14 +39,6 @@ Put All Field Xpath Constructeur In Global
   
     Set Global Variable    ${nom_field}
     Set Global Variable    ${prefixe_mac_field}    
-
-Fill Data In Constructeur Creation 1
-    Put All Field Xpath Constructeur In Global
-
-    Wait Until Element Is Visible        ${nom_field}
-    Input Text    ${nom_field}    Constructeur numéro 1
-    CHECK INPUT TEXT FIELD LOG    Nom    ${nom_field}    Constructeur numéro 1    False
-    Click Button    ${ajouter_button}
    
 Check Information In Constructeur
     [Arguments]    ${data}
@@ -59,18 +51,6 @@ Check Error Field Constructeur
     Click Button    ${ajouter_button} 
     Find Error Message    Nom   
 
-Find Error Message
-    [Arguments]    ${error_template_text}
-
-    ${error_xpath}    Set Variable    //label[contains(text(), '${error_template_text}')]/following-sibling::div[@class="form-text text-danger"]    
-    ${test}    Run Keyword And Return Status    Wait Until Page Contains Element    ${error_xpath}
-    IF   ${test}    
-        ${error_text}    Get Text    ${error_xpath}    
-        LOG CHECK GOOD    The message of ${error_template_text} field is : ${error_text}
-    ELSE   
-        LOG CHECK WARNING    There is no error message in ${error_template_text} field
-    END
-
 Fill Data In Constructeur Creation   
     [Arguments]    ${data}    
     Put All Field Xpath Constructeur In Global
@@ -82,6 +62,12 @@ Fill Data In Constructeur Creation
     CHECK INPUT TEXT FIELD LOG    Préfixe MAC    ${prefixe_mac_field}    ${data["Préfixe MAC"]}    False
     Click Button    ${ajouter_button}
 
+Test Fill Data In Constructeur Creation 
+    [Arguments]    ${data} 
+    ${test_fill_constructeur}    Run Keyword And Return Status    Fill Data In Constructeur Creation    ${data}
+    Run Keyword If    ${test_fill_constructeur} == False    RETRY TEST
+    Run Keyword If    ${test_fill_constructeur} == False    Fail
+    
 Fill Data In Constructeur
     [Arguments]    ${data}    
     Put All Field Xpath Constructeur In Global
@@ -92,3 +78,10 @@ Fill Data In Constructeur
     Input Text    ${prefixe_mac_field}    ${data["Préfixe MAC"]}
     CHECK INPUT TEXT FIELD LOG    Préfixe MAC    ${prefixe_mac_field}    ${data["Préfixe MAC"]}    False
     Click Button    ${validation_button}
+
+Test Fill Data In Constructeur
+    [Arguments]    ${data} 
+
+    ${test_fill_constructeur}    Run Keyword And Return Status    Fill Data In Constructeur    ${data}
+    Run Keyword If    ${test_fill_constructeur} == False    RETRY TEST
+    Run Keyword If    ${test_fill_constructeur} == False    Fail

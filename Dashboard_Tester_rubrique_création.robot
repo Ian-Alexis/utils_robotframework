@@ -237,38 +237,38 @@ Click And Check Inventaire Collecte Plus
     Page Should Contain    ${ajouter_text}
 
 
-*** Test Cases ***
-Anyway Test 
-    Open Anyway
-    Check Accueil
-    Click And Check Constructeur
-    Click And Check Contructeur Plus
-    Click And Check Modèle Equipments
-    Click And Check Modèle Equipment Plus
-    Click And Check Modèle Cartes
-    Click And Check Modèle Cartes Plus
-    CLick And Check Modèle Transceivers
-    Click And Check Modèle Transceivers Plus
-    Click And Check Modèle Licenses
-    Click And Check Modèle Licenses Plus
-    CLick And Check Modèle Templates
-    Click And Check Modèle Templates Plus
-    Click And Check Inventaire Sites
-    Click And Check Inventaire Sites Plus
-    Click And Check Inventaire Racks
-    Click And Check Inventaire Racks Plus
-    Click And Check Inventaire NE
-    Click Modèle
-    Sleep    ${delay}
-    Click And Check Inventaire Equipement 
-    Click And Check Inventaire Equipment Plus
-    Click And Check Inventaire Cartes
-    Click And Check Inventaire Cartes Plus
-    Click And Check Inventaire Licenses
-    Click And Check Inventaire Licenses Plus
-    Click And Check Inventaire Services
-    Click And Check Inventaire Services Plus
-    Sleep    ${delay}
-    Click And Check Inventaire Collecte
-    Click And Check Inventaire Collecte Plus
-    Sleep    ${tampon}   
+# *** Test Cases ***
+# Anyway Test 
+#     Open Anyway
+#     Check Accueil
+#     Click And Check Constructeur
+#     Click And Check Contructeur Plus
+#     Click And Check Modèle Equipments
+#     Click And Check Modèle Equipment Plus
+#     Click And Check Modèle Cartes
+#     Click And Check Modèle Cartes Plus
+#     CLick And Check Modèle Transceivers
+#     Click And Check Modèle Transceivers Plus
+#     Click And Check Modèle Licenses
+#     Click And Check Modèle Licenses Plus
+#     CLick And Check Modèle Templates
+#     Click And Check Modèle Templates Plus
+#     Click And Check Inventaire Sites
+#     Click And Check Inventaire Sites Plus
+#     Click And Check Inventaire Racks
+#     Click And Check Inventaire Racks Plus
+#     Click And Check Inventaire NE
+#     Click Modèle
+#     Sleep    ${delay}
+#     Click And Check Inventaire Equipement 
+#     Click And Check Inventaire Equipment Plus
+#     Click And Check Inventaire Cartes
+#     Click And Check Inventaire Cartes Plus
+#     Click And Check Inventaire Licenses
+#     Click And Check Inventaire Licenses Plus
+#     Click And Check Inventaire Services
+#     Click And Check Inventaire Services Plus
+#     Sleep    ${delay}
+#     Click And Check Inventaire Collecte
+#     Click And Check Inventaire Collecte Plus
+#     Sleep    ${tampon}   

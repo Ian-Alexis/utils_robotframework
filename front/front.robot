@@ -15,8 +15,9 @@ ${no_result_search}    //div[contains(text(), "Aucun élément trouvé.")]
 
 
 ${popup_validation}   //div[@id="swal2-html-container"]
-${ok_popup_button}    //button[contains(text(), "OK")]
+${ok_popup_button}    //button[contains(text(),"OK")]
 ${confirmer_button}    //button[contains(text(), "Confirmer")]
+${scrolling_menu_loading}    //div[@class="select-loader"]
 
 *** Keywords ***
 Connect To Anyway
@@ -34,26 +35,33 @@ Find Field Xpath From Name
 
     ${input_xpath}    Set Variable    //label[contains(text(), '${field_name}')]/following-sibling::input[1]
     ${textarea_xpath}    Set Variable    //label[contains(text(), '${field_name}')]/following-sibling::textarea[1]
+    ${scrolling_menu_xpath}    Set Variable    //label[contains(text(), '${field_name}')]/following-sibling::div
+
+
     ${is_visible_input}    Run Keyword And Return Status    Element Should Be Visible    ${input_xpath}
     ${is_visible_textarea}    Run Keyword And Return Status    Element Should Be Visible    ${textarea_xpath}
+    ${is_visible_scrolling_menu}    Run Keyword And Return Status    Element Should Be Visible    ${scrolling_menu_xpath}
 
     IF    ${is_visible_input}  
         Log To Console    ${field_name} input does exist
         ${xpath}    Set Variable      ${input_xpath}  
     ELSE IF    ${is_visible_textarea}
-        Log To Console    ${field name} textarea exits
+        Log To Console    ${field name} textarea does exist
         ${xpath}    Set Variable      ${textarea_xpath} 
+    ELSE IF    ${is_visible_scrolling_menu}
+        Log To Console    ${field_name} scrolling menu does exist
+        ${xpath}    Set Variable    ${scrolling_menu_xpath}
     ELSE
-        LOG CHECK WARNING    ${field_name} field or textarea xpath doesn't exist
+        LOG CHECK WARNING    ${field_name} field textarea or scrolling menu xpath doesn't exist
     END
 
     [Return]    ${xpath}    
 
 Validate Popup Ok
+    ${test_popup_ok}    Run Keyword And Return Status   Wait Until Page Contains Element  ${ok_popup_button}
     Wait Until Page Contains Element    ${popup_validation}
     ${popup_validation_text}    Get Text    ${popup_validation}
     LOG CHECK GOOD    ${popup_validation_text}
-    Wait Until Page Contains Element   ${ok_popup_button}
     Click Button    ${ok_popup_button}
     
 Validate Popup Confirmer  
@@ -61,7 +69,6 @@ Validate Popup Confirmer
     ${popup_validation_text}=    Get Text    ${popup_validation}
     LOG CHECK GOOD    ${popup_validation_text}
     Click Button    ${confirmer_button}
-    Sleep    1s
     Validate Popup Ok
 
 Get Column Index From Name
@@ -136,15 +143,15 @@ Test Search Filter
     Wait Until Page Contains Element    ${search_xpath}
     Input Text    ${search_xpath}    ${input}
     ${result_search}    Set Variable    //td[contains(text(), "${input}")]
-    ${test}    Run Keyword And Return Status    Wait Until Page Contains Element    ${result_search}     1s
-    IF   '${test}'=='${find}'
-        IF  ${test}
+    ${existing_test}    Run Keyword And Return Status    Wait Until Page Contains Element    ${result_search}     1s
+    IF   '${existing_test}'=='${find}'
+        IF  ${existing_test}
             LOG CHECK GOOD    ${input} found !
         ELSE
             LOG CHECK GOOD    ${input} not found !       
         END     
     ELSE
-        IF    ${test}
+        IF    ${existing_test}
             LOG CHECK WARNING    ${input} found !
         ELSE 
             LOG CHECK WARNING    ${input} not found !
@@ -178,9 +185,10 @@ Check And Delete Existing Elements
         Wait Until Page Contains Element    ${search_xpath}
         ${dict_test}    Set Variable    ${nom_dict["${test}"]}
         Input Text    ${search_xpath}    ${dict_test["Nom"]} 
-        ${test}    Run Keyword And Return Status    Wait Until Page Contains Element    //tr[td[normalize-space()='${dict_test["Nom"]}']]    1s
+        ${xpath}    Set Variable    //tr[td[normalize-space()='${dict_test["Nom"]}']]
+        ${test}    Run Keyword And Return Status    Wait Until Page Contains Element    ${xpath}    1s
         IF    ${test}
-            Click Element    //tr[td[normalize-space()='${dict_test["Nom"]}']]
+            Click Element    ${xpath}
             Erase Element
         END
     END
@@ -196,4 +204,27 @@ Erase Element
     Wait Until Page Contains Element    ${trash_logo}
     Click Element    ${trash_logo}
     Validate Popup Confirmer
-    Validate Popup Ok
+
+Find Error Message
+    [Arguments]    ${error_template_text}
+
+    ${error_xpath}    Set Variable    //label[contains(text(), '${error_template_text}')]/following-sibling::div[@class="form-text text-danger"]    
+    ${test}    Run Keyword And Return Status    Wait Until Page Contains Element    ${error_xpath}
+    IF   ${test}    
+        ${error_text}    Get Text    ${error_xpath}    
+        LOG CHECK GOOD    The message of ${error_template_text} field is : ${error_text}
+    ELSE   
+        LOG CHECK WARNING    There is no error message in ${error_template_text} field
+    END
+
+Select In Scrolling Menu
+    [Arguments]    ${menu_name}    ${option_text}
+
+        Wait Until Element Is Not Visible    ${scrolling_menu_loading}    20s
+
+        ${menu_xpath}    Find Field Xpath From Name    ${menu_name}
+        Wait Until Page Contains Element    ${menu_xpath}
+        Click Element    ${menu_xpath}
+        ${option_xpath}    Set Variable    //li/a/span[normalize-space()='${option_text}']
+        Wait Until Page Contains Element    ${option_xpath}
+        Click Element    ${option_xpath}
