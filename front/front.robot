@@ -178,7 +178,7 @@ Check And Delete Existing Elements
         Wait Until Page Contains Element    ${search_xpath}
         ${dict_test}    Set Variable    ${nom_dict["${test}"]}
         Input Text    ${search_xpath}    ${dict_test["Nom"]} 
-        ${test}    Run Keyword And Return Status    Wait Until Page Contains Element    //tr[td[contains(text(),'${dict_test["Nom"]}')]]    1s
+        ${test}    Run Keyword And Return Status    Wait Until Page Contains Element    //tr[td[normalize-space()='${dict_test["Nom"]}']]    1s
         IF    ${test}
             Click Element    //tr[td[normalize-space()='${dict_test["Nom"]}']]
             Erase Element
