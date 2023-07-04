@@ -1,5 +1,6 @@
 *** Settings ***
 Library     SeleniumLibrary
+Resource    utils/utils.robot
 
 *** Variables ***
 ${url_anyway}    https://anyway.qal.covage.com/dashboard
@@ -121,11 +122,13 @@ CLick And Check Modèle Transceivers
     Click Element    ${modele_transceivers_xpath}
     Page Should Contain    ${transceivers_text}
     Page Should Contain    ${actions_text}
+    LOG CHECK GOOD    Nous sommes dans Modèle Transceivers
 
 Click And Check Modèle Transceivers Plus
     Click Element    ${modele_transceivers_plus_xpath}
     Page Should Contain    ${transceivers_text}
     Page Should Contain    ${ajouter_text}
+    LOG CHECK GOOD    Nous sommes dans Modèle Transceivers Ajouter
     
 Click And Check Modèle Licenses
     Click Modèle

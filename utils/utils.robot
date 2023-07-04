@@ -22,12 +22,12 @@ CHECK INPUT TEXT FIELD LOG
     END
 
 CHECK SCROLLING MENU TEXT FIELD
-    [Arguments]    ${name_of_field}    ${xpath_of_field}    ${text_of_field}
+    [Arguments]    ${name_of_field}    ${xpath_of_field}    ${text_of_field}    ${log}
     ${Extract_field}=    Get Text    ${xpath_of_field}
     ${test_field}=    Run Keyword And Return Status    Should Contain    ${Extract_field}  ${text_of_field} 
-    IF  ${test_field}
+    IF  ${test_field} and ${log}
         LOG CHECK GOOD    There is writed ${text_of_field} in the ${name_of_field} scrolling menu
-    ELSE
+    ELSE IF    "${test_field}" == "False"
         LOG CHECK WARNING    There is not writed ${text_of_field} in the ${name_of_field} scrolling menu
     END
 

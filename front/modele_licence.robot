@@ -37,8 +37,8 @@ Check Information In Modele Licence
     [Arguments]    ${data}
     Wait Until Page Contains Element    ${validation_button}
     Wait Until Page Contains Element    ${modele_licence_text}
-    CHECK SCROLLING MENU TEXT FIELD    Constructeur    ${constructeur_field}    ${data["Constructeur"]}
-    # CHECK SCROLLING MENU TEXT FIELD LOG    Préfixe MAC    ${constructeur_field}    ${data["Constructeur"]}    True
+    # CHECK SCROLLING MENU TEXT FIELD    Constructeur    ${constructeur_field}    ${data["Constructeur"]}
+    CHECK SCROLLING MENU TEXT FIELD    Préfixe MAC    ${constructeur_field}    ${data["Constructeur"]}    True
     CHECK INPUT TEXT FIELD LOG      Nom du modèle    ${nom_du_modèle_field}    ${data["Nom"]}    True
     CHECK INPUT TEXT FIELD LOG      Référence    ${reference_field}    ${data["Référence"]}    True
 
@@ -73,8 +73,7 @@ Fill Data In Modele Licence Creation
     Write In Input    Nom du modèle    ${data["Nom"]}
     Write In Input    Référence    ${data["Référence"]}
 
-    CHECK SCROLLING MENU TEXT FIELD    Préfixe MAC    ${constructeur_field}    ${data["Constructeur"]}
-    # CHECK SCROLLING MENU TEXT FIELD LOG    Préfixe MAC    ${constructeur_field}    ${data["Constructeur"]}    False
+    CHECK SCROLLING MENU TEXT FIELD    Préfixe MAC    ${constructeur_field}    ${data["Constructeur"]}    False
     CHECK INPUT TEXT FIELD LOG    Nom    ${nom_du_modèle_field}    ${data["Nom"]}    False
     CHECK INPUT TEXT FIELD LOG    Réréfence    ${reference_field}    ${data["Référence"]}    False
     Click Button    ${ajouter_button}
@@ -94,8 +93,7 @@ Fill Data In Constructeur
     Write In Input    Nom du modèle    ${data["Nom"]}
     Write In Input    Référence    ${data["Référence"]}
 
-    CHECK SCROLLING MENU TEXT FIELD    Préfixe MAC    ${constructeur_field}    ${data["Constructeur"]}
-    # CHECK SCROLLING MENU TEXT FIELD LOG    Préfixe MAC    ${constructeur_field}    ${data["Constructeur"]}    False
+    CHECK SCROLLING MENU TEXT FIELD    Préfixe MAC    ${constructeur_field}    ${data["Constructeur"]}    False
     CHECK INPUT TEXT FIELD LOG    Nom    ${nom_du_modèle_field}    ${data["Nom"]}    False
     CHECK INPUT TEXT FIELD LOG    Préfixe MAC    ${reference_field}    ${data["Référence"]}    False
 
