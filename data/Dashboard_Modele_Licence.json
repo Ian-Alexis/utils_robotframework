@@ -1,0 +1,17 @@
+{
+    "Dashboard_modèle_licence_1" :{
+        "Constructeur" : "Constructeur numéro 2",
+        "Nom" : "Modèle licence numéro 1",
+        "Référence" : "Modèle_licence_numéro-1"
+    },
+    "Dashboard_modèle_licence_1Bis" :{
+        "Constructeur" : "Constructeur numéro 2",
+        "Nom" : "Modèle licence numéro 1 Bis",
+        "Référence" : "Modèle_licence_numéro-2"
+    },
+    "Dashboard_modèle_licence_2" :{
+        "Constructeur" : "Constructeur numéro 2",
+        "Nom" : "Modèle licence numéro 2",
+        "Référence" : "Modèle_licence_numéro-2"
+    }
+}

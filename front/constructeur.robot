@@ -57,9 +57,11 @@ Fill Data In Constructeur Creation
 
     Wait Until Element Is Visible        ${nom_field}
     Input Text    ${nom_field}    ${data["Nom"]}
-    CHECK INPUT TEXT FIELD LOG    Nom    ${nom_field}    ${data["Nom"]}    False
     Input Text    ${prefixe_mac_field}    ${data["Préfixe MAC"]}
+    
+    CHECK INPUT TEXT FIELD LOG    Nom    ${nom_field}    ${data["Nom"]}    False
     CHECK INPUT TEXT FIELD LOG    Préfixe MAC    ${prefixe_mac_field}    ${data["Préfixe MAC"]}    False
+
     Click Button    ${ajouter_button}
 
 Test Fill Data In Constructeur Creation 
@@ -74,9 +76,11 @@ Fill Data In Constructeur
 
     Wait Until Element Is Visible        ${nom_field}
     Input Text    ${nom_field}    ${data["Nom"]}
-    CHECK INPUT TEXT FIELD LOG    Nom    ${nom_field}    ${data["Nom"]}    False
     Input Text    ${prefixe_mac_field}    ${data["Préfixe MAC"]}
+
+    CHECK INPUT TEXT FIELD LOG    Nom    ${nom_field}    ${data["Nom"]}    False
     CHECK INPUT TEXT FIELD LOG    Préfixe MAC    ${prefixe_mac_field}    ${data["Préfixe MAC"]}    False
+
     Click Button    ${validation_button}
 
 Test Fill Data In Constructeur

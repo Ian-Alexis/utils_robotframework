@@ -10,7 +10,6 @@ Suite Setup    Connect To Anyway
 
 *** Test Cases ***
 Dashboard Constructeur
-# Faire une fonction qui extrait tous les json correspondant au nom du test
     &{data}    EXTRACT JSON TO DICTIONNARY    data\\Dashboard_Constructeur.json
     
     Verify Dashboard Menu

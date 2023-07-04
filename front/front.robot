@@ -130,9 +130,9 @@ Test Filter
 
     ${sort_test}=    Run Keyword And Return Status    Should Be True    ${noms} == ${noms_sorted}
     IF  ${sort_test}
-        LOG CHECK GOOD    The list of constructeur is sorted by NOM
+        LOG CHECK GOOD    The list of constructeur is sorted by ${filter_name}
     ELSE
-        LOG CHECK WARNING    The list of constructeur is not sorted by NOM
+        LOG CHECK WARNING    The list of constructeur is not sorted by ${filter_name}
     END
 
 Test Search Filter
@@ -177,9 +177,6 @@ Check And Delete Existing Elements
     END
     Sort List    ${all_noms}
     Reverse List    ${all_noms}
-    Log    ${all_noms}
-    ${var}    Set Variable    ${nom_dict["Dashboard_constructeur_2"]}
-    Log    ${var["Nom"]}
 
     FOR    ${test}    IN    @{all_noms}
         Wait Until Page Contains Element    ${search_xpath}
@@ -217,14 +214,21 @@ Find Error Message
         LOG CHECK WARNING    There is no error message in ${error_template_text} field
     END
 
+Write In Input
+    [Arguments]    ${input_name}    ${text}
+
+    ${input_xpath}    Find Field Xpath From Name    ${input_name}
+    Input Text    ${input_xpath}    ${text}
+    CHECK INPUT TEXT FIELD LOG    ${input_name}   ${input_xpath}    ${text}    False
+
 Select In Scrolling Menu
     [Arguments]    ${menu_name}    ${option_text}
 
-        Wait Until Element Is Not Visible    ${scrolling_menu_loading}    20s
+    Wait Until Element Is Not Visible    ${scrolling_menu_loading}    20s
 
-        ${menu_xpath}    Find Field Xpath From Name    ${menu_name}
-        Wait Until Page Contains Element    ${menu_xpath}
-        Click Element    ${menu_xpath}
-        ${option_xpath}    Set Variable    //li/a/span[normalize-space()='${option_text}']
-        Wait Until Page Contains Element    ${option_xpath}
-        Click Element    ${option_xpath}
+    ${menu_xpath}    Find Field Xpath From Name    ${menu_name}
+    Wait Until Page Contains Element    ${menu_xpath}
+    Click Element    ${menu_xpath}
+    ${option_xpath}    Set Variable    //li/a/span[normalize-space()='${option_text}']
+    Wait Until Page Contains Element    ${option_xpath}
+    Click Element    ${option_xpath}
