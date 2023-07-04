@@ -8,6 +8,7 @@ ${bonjour_message}    //h2[contains(text(), "Bonjour")]
 
 ${ajouter_button}    //button[span[contains(text(), "Ajouter")]]
 ${validation_button}    //button[@class="btn btn-success"]
+${valider_button}    //button[span[i[@class='bi bi-check']]]
 ${ariane_fil_object}    //li[@class="breadcrumb-item active"]
 
 ${trash_logo}    //i[@class="bi bi-trash3-fill"]
@@ -113,7 +114,8 @@ Test Filter
     @{noms}    Create List
     FOR    ${element}    IN    @{elements}
         ${nom}    Get Text    ${element}
-        Append To List    ${noms}    ${nom}
+        ${nom_minuscule}    Convert To Lower Case    ${nom}
+        Append To List    ${noms}    ${nom_minuscule}
     END
     Remove From List   ${noms}    0
     Sort List   ${noms}
@@ -124,15 +126,16 @@ Test Filter
     @{noms_sorted}    Create List
     FOR    ${element}    IN    @{elements_sort}
         ${nom}    Get Text    ${element}
-        Append To List    ${noms_sorted}    ${nom}
+        ${nom_minuscule}    Convert To Lower Case    ${nom}
+        Append To List    ${noms_sorted}    ${nom_minuscule}
     END
     Remove From List   ${noms_sorted}    0
 
     ${sort_test}=    Run Keyword And Return Status    Should Be True    ${noms} == ${noms_sorted}
     IF  ${sort_test}
-        LOG CHECK GOOD    The list of constructeur is sorted by NOM
+        LOG CHECK GOOD    The list of constructeur is sorted by ${filter_name}
     ELSE
-        LOG CHECK WARNING    The list of constructeur is not sorted by NOM
+        LOG CHECK WARNING    The list of constructeur is not sorted by ${filter_name}
     END
 
 Test Search Filter
@@ -160,6 +163,37 @@ Test Search Filter
 
     [Return]     ${result_search}
 
+Test Search Filter Scrolling Menu 
+    [Arguments]    ${filter_name}    ${option_text}    ${find}
+
+    ${index}    Get Column Index From Name    ${filter_name}
+    ${search_xpath}    Set Variable    //tbody/tr[1]/td[position()=${index}]/div/div
+    Wait Until Page Contains Element    ${search_xpath}
+
+    Click Element    ${search_xpath}
+    ${option_xpath}    Set Variable    //li/a/span[normalize-space()='${option_text}']
+    Wait Until Page Contains Element    ${option_xpath}
+    Click Element    ${option_xpath}
+    Reload Page
+
+    ${result_search}    Set Variable    //td[contains(text(), "${option_text}")]
+    ${existing_test}    Run Keyword And Return Status    Wait Until Page Contains Element    ${result_search}     1s
+    IF   '${existing_test}'=='${find}'
+        IF  ${existing_test}
+            LOG CHECK GOOD    ${option_text} found !
+        ELSE
+            LOG CHECK GOOD    ${option_text} not found !       
+        END     
+    ELSE
+        IF    ${existing_test}
+            LOG CHECK WARNING    ${option_text} found !
+        ELSE 
+            LOG CHECK WARNING    ${option_text} not found !
+        END
+    END
+
+    [Return]     ${result_search}
+
 
 Check And Delete Existing Elements 
     [Arguments]    ${filter_name}    &{nom_dict}    
@@ -177,9 +211,6 @@ Check And Delete Existing Elements
     END
     Sort List    ${all_noms}
     Reverse List    ${all_noms}
-    Log    ${all_noms}
-    ${var}    Set Variable    ${nom_dict["Dashboard_constructeur_2"]}
-    Log    ${var["Nom"]}
 
     FOR    ${test}    IN    @{all_noms}
         Wait Until Page Contains Element    ${search_xpath}
@@ -217,14 +248,30 @@ Find Error Message
         LOG CHECK WARNING    There is no error message in ${error_template_text} field
     END
 
+Write In Input
+    [Arguments]    ${input_name}    ${text}
+
+    ${input_xpath}    Find Field Xpath From Name    ${input_name}
+    Input Text    ${input_xpath}    ${text}
+    CHECK INPUT TEXT FIELD LOG    ${input_name}   ${input_xpath}    ${text}    False
+
 Select In Scrolling Menu
+# Mettre un Log
     [Arguments]    ${menu_name}    ${option_text}
 
-        Wait Until Element Is Not Visible    ${scrolling_menu_loading}    20s
+    Wait Until Element Is Not Visible    ${scrolling_menu_loading}    20s
 
-        ${menu_xpath}    Find Field Xpath From Name    ${menu_name}
-        Wait Until Page Contains Element    ${menu_xpath}
-        Click Element    ${menu_xpath}
-        ${option_xpath}    Set Variable    //li/a/span[normalize-space()='${option_text}']
-        Wait Until Page Contains Element    ${option_xpath}
-        Click Element    ${option_xpath}
+    ${menu_xpath}    Find Field Xpath From Name    ${menu_name}
+    Wait Until Page Contains Element    ${menu_xpath}
+    Click Element    ${menu_xpath}
+    ${option_xpath}    Set Variable    //li/a/span[normalize-space()='${option_text}']
+    Wait Until Page Contains Element    ${option_xpath}
+    Click Element    ${option_xpath}
+
+Clear Rechercher Input
+    [Arguments]    ${input_name}
+
+    ${index}    Get Column Index From Name    ${input_name}
+    ${search_xpath}    Set Variable    //tbody/tr[1]/td[position()=${index}]/div/input
+    Wait Until Page Contains Element    ${search_xpath}
+    Press Keys    ${search_xpath}    \CTRL+a+DELETE

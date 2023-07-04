@@ -1,0 +1,53 @@
+
+{
+    "Type_List" :[
+        "-",
+        "LC/LC",
+        "RJ45",
+        "SFP",
+        "SFP+",
+        "SFP28",
+        "SFP56",
+        "SFP-DD",
+        "SFP-DD112",
+        "cSFP",
+        "cSFP+",
+        "X2",
+        "Xenpak",
+        "XFP",
+        "CFP",
+        "CFP2",
+        "CFP4",
+        "CFP8",
+        "QSFP",
+        "QSFP+",
+        "QSFP14",
+        "QSFP28",
+        "QSFP56",
+        "QSFP-DD"
+    ],
+
+    "Technique_List" :[
+        "-",
+        "Unidirectionnel",
+        "Bidirectionnel"
+    ],
+
+    "Debit_List" :[
+        "-",
+        "10M",
+        "100M",
+        "1G",
+        "4G",
+        "10G",
+        "25G",
+        "40G",
+        "50G",
+        "100G",
+        "150G",
+        "200G",
+        "400G",
+        "600G",
+        "800G"
+    ]
+}
