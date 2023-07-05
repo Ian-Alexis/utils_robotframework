@@ -39,6 +39,14 @@ PRESS MULTIPLE TIME KEYS
     END
 
 LOG CHECK GOOD
+    [Documentation] 
+    ...    La fonction LOG CHECK GOOD permet d'enregistrer un message avec une gravité de niveau WARN.
+    ...    Tout en l'affichant en vert. 
+    ...    Ceci est souvent utilisé pour indiquer qu'une certaine étape du test s'est déroulée correctement.
+    Arguments:
+
+${message} : Le message à enregistrer dans le journal de test.    
+
     [Arguments]    ${message}
     Log    <h3 style="color: green;">${message}</h3>   level=WARN  html=True
 
