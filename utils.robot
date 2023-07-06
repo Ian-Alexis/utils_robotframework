@@ -11,24 +11,24 @@ Library    utils.py
 *** Keywords ***
 CHECK INPUT TEXT FIELD LOG
     [Documentation]
-    ...    La fonction CHECK INPUT TEXT FIELD LOG vérifie la valeur d'un champ de texte spécifique et 
-    ...    enregistre le résultat dans le journal de test. Cette fonction est utile pour valider 
-    ...    que les champs de texte ont été correctement remplis lors d'un test automatisé.
+    ...    The CHECK INPUT TEXT FIELD LOG function verifies the value of a specific text field and
+    ...    logs the result in the test log. This function is useful for validating
+    ...    that text fields have been correctly filled in during an automated test.
     ...    
     ...    Arguments:
-    ...    ${name_of_field} : Le nom du champ de texte à vérifier. Ce nom est utilisé uniquement à des fins de journalisation.
-    ...    ${xpath_of_field} : Le chemin d'accès XPath du champ de texte à vérifier.
-    ...    ${text_of_field} : Le texte attendu dans le champ de texte.
-    ...    ${log} : Un booléen pour contrôler si le résultat doit être enregistré dans le journal de test.
+    ...    ${name_of_field} (string) : The name of the text field to check. This name is used only for logging purposes.
+    ...    ${xpath_of_field} (string) : The XPath path of the text field to check.
+    ...    ${text_of_field} (string) : The expected text in the text field.
+    ...    ${log} (boolean) : A boolean to control whether the result should be logged in the test log.
     ...    
-    ...    Comportement :
-    ...    1. Extrayez la valeur actuelle du champ de texte spécifié par ${xpath_of_field}.
-    ...    2. Vérifiez si la valeur extraite contient ${text_of_field}.
-    ...    3. Si la valeur contient ${text_of_field} et si ${log} est vrai, enregistrez un message de succès dans le journal.
-    ...    4. Si la valeur ne contient pas ${text_of_field}, enregistrez un message d'erreur dans le journal.
+    ...    Behavior :
+    ...    1. Extract the current value of the text field specified by ${xpath_of_field}.
+    ...    2. Check if the extracted value contains ${text_of_field}.
+    ...    3. If the value contains ${text_of_field} and if ${log} is true, log a success message in the log.
+    ...    4. If the value does not contain ${text_of_field}, log an error message in the log.
     ...    
-    ...    Exemple d'utilisation :
-    ...    CHECK INPUT TEXT FIELD LOG    Nom de l'utilisateur    //input[@name='username']    "Utilisateur Test"    ${TRUE}
+    ...    Usage example :
+    ...    CHECK INPUT TEXT FIELD LOG    Username    //input[@name='username']    "Test User"    ${TRUE}
 
     [Arguments]    ${name_of_field}    ${xpath_of_field}    ${text_of_field}    ${log}
     ${Extract_field}=    Get Value    ${xpath_of_field}
@@ -41,25 +41,25 @@ CHECK INPUT TEXT FIELD LOG
 
 CHECK SCROLLING MENU TEXT FIELD
     [Documentation]
-    ...    La fonction CHECK SCROLLING MENU TEXT FIELD vérifie le texte d'un champ spécifique 
-    ...    dans un menu déroulant et enregistre le résultat dans le journal de test. 
-    ...    Cette fonction est utile pour valider que les menus déroulants ont été correctement 
-    ...    remplis ou sélectionnés lors d'un test automatisé.
+    ...    The CHECK SCROLLING MENU TEXT FIELD function verifies the text of a specific field
+    ...    in a dropdown menu and logs the result in the test log.
+    ...    This function is useful for validating that dropdown menus have been correctly
+    ...    filled or selected during an automated test.
     ...    
     ...    Arguments:
-    ...    ${name_of_field} : Le nom du champ du menu déroulant à vérifier. Ce nom est utilisé uniquement à des fins de journalisation.
-    ...    ${xpath_of_field} : Le chemin d'accès XPath du champ du menu déroulant à vérifier.
-    ...    ${text_of_field} : Le texte attendu dans le champ du menu déroulant.
-    ...    ${log} : Un booléen pour contrôler si le résultat doit être enregistré dans le journal de test.
+    ...    ${name_of_field} (string) : The name of the dropdown menu field to check. This name is used only for logging purposes.
+    ...    ${xpath_of_field} (string) : The XPath path of the dropdown menu field to check.
+    ...    ${text_of_field} (string) : The expected text in the dropdown menu field.
+    ...    ${log} (boolean) : A boolean to control whether the result should be logged in the test log.
     ...    
-    ...    Comportement :
-    ...    1. Extrayez le texte actuel du champ du menu déroulant spécifié par ${xpath_of_field}.
-    ...    2. Vérifiez si le texte extrait contient ${text_of_field}.
-    ...    3. Si le texte contient ${text_of_field} et si ${log} est vrai, enregistrez un message de succès dans le journal.
-    ...    4. Si le texte ne contient pas ${text_of_field}, enregistrez un message d'erreur dans le journal.
+    ...    Behavior :
+    ...    1. Extract the current text of the dropdown menu field specified by ${xpath_of_field}.
+    ...    2. Check if the extracted text contains ${text_of_field}.
+    ...    3. If the text contains ${text_of_field} and if ${log} is true, log a success message in the log.
+    ...    4. If the text does not contain ${text_of_field}, log an error message in the log.
     ...    
-    ...    Exemple d'utilisation :
-    ...    CHECK SCROLLING MENU TEXT FIELD    Nom du menu    //select[@name='dropdown']    "Option sélectionnée"    ${TRUE}
+    ...    Usage example :
+    ...    CHECK SCROLLING MENU TEXT FIELD    Menu name    //select[@name='dropdown']    "Selected option"    ${TRUE}
 
     [Arguments]    ${name_of_field}    ${xpath_of_field}    ${text_of_field}    ${log}
     ${Extract_field}=    Get Text    ${xpath_of_field}
@@ -72,20 +72,20 @@ CHECK SCROLLING MENU TEXT FIELD
 
 PRESS MULTIPLE TIME KEYS
     [Documentation]
-    ...    La fonction PRESS MULTIPLE TIME KEYS simule l'appui d'une séquence de touches 
-    ...    sur le clavier un certain nombre de fois. 
-    ...    Cette fonction est utile pour les tests qui nécessitent des interactions avec le clavier,
-    ...    comme la saisie de texte ou la navigation à l'aide des touches du clavier.
+    ...    The PRESS MULTIPLE TIME KEYS function simulates the pressing of a sequence of keys
+    ...    on the keyboard a certain number of times.
+    ...    This function is useful for tests that require keyboard interactions,
+    ...    such as typing text or navigating using the keyboard keys.
     ...    
     ...    Arguments:
-    ...    ${number} : Le nombre de fois que la séquence de touches doit être simulée.
-    ...    ${keys} : La séquence de touches à simuler.
+    ...    ${number} (integer) : The number of times the key sequence should be simulated.
+    ...    ${keys} (string) : The sequence of keys to simulate.
     ...    
-    ...    Comportement :
-    ...    1. Pour chaque itération jusqu'à ${number}, simulez l'appui de la séquence de touches ${keys}.
-    ...    2. Attendez 0,1 seconde entre chaque simulation pour garantir que chaque touche est correctement détectée.
+    ...    Behavior :
+    ...    1. For each iteration up to ${number}, simulate the pressing of the key sequence ${keys}.
+    ...    2. Wait 0.1 second between each simulation to ensure that each key press is correctly detected.
     ...    
-    ...    Exemple d'utilisation :
+    ...    Usage example :
     ...    PRESS MULTIPLE TIME KEYS    10    TAB
 
     [Arguments]    ${number}    ${keys}
@@ -96,46 +96,46 @@ PRESS MULTIPLE TIME KEYS
 
 LOG CHECK GOOD
     [Documentation]
-    ...    La fonction LOG CHECK GOOD enregistre un message de niveau WARN dans les journaux de test,
-    ...    avec une mise en forme HTML pour afficher le texte en vert.
-    ...    Cette fonction est généralement utilisée pour indiquer qu'une certaine étape du test s'est déroulée correctement.
+    ...    The LOG CHECK GOOD function logs a message at the WARN level in the test logs,
+    ...    with HTML formatting to display the text in green.
+    ...    This function is typically used to indicate that a certain test step has proceeded correctly.
     ...    
     ...    Arguments:
-    ...    ${message} : Le message à enregistrer dans le journal de test.
+    ...    ${message} (string) : The message to log in the test log.
     ...    
-    ...    Exemple d'utilisation:
-    ...    LOG CHECK GOOD    L'étape de validation s'est déroulée correctement.
+    ...    Usage example :
+    ...    LOG CHECK GOOD    Validation step proceeded correctly.
 
     [Arguments]    ${message}
     Log    <h3 style="color: green;">${message}</h3>   level=WARN  html=True
 
 LOG CHECK WARNING
     [Documentation]
-    ...    La fonction LOG CHECK WARNING enregistre un message de niveau ERROR dans les journaux de test,
-    ...    avec une mise en forme HTML pour afficher le texte en rouge.
-    ...    Cette fonction est généralement utilisée pour indiquer une erreur ou un échec lors d'une certaine étape du test.
+    ...    The LOG CHECK WARNING function logs a message at the ERROR level in the test logs,
+    ...    with HTML formatting to display the text in red.
+    ...    This function is typically used to indicate an error or failure during a certain test step.
     ...    
     ...    Arguments:
-    ...    ${message} : Le message à enregistrer dans le journal de test.
+    ...    ${message} (string) : The message to log in the test log.
     ...    
-    ...    Exemple d'utilisation:
-    ...    LOG CHECK WARNING    L'étape de validation a échoué.
+    ...    Usage example :
+    ...    LOG CHECK WARNING    Validation step failed.
 
     [Arguments]    ${message}
     Log    <h3 style="color: red;">${message}</h3>    level=ERROR     html=True
 
 LOG CHECK INFORMATION
     [Documentation]
-    ...    La fonction LOG CHECK INFORMATION enregistre un message de niveau ERROR dans les journaux de test,
-    ...    avec une mise en forme HTML pour afficher le texte en orange.
-    ...    Cette fonction est utilisée pour enregistrer des informations supplémentaires qui pourraient être utiles 
-    ...    pour comprendre le déroulement du test, sans pour autant indiquer un échec.
+    ...    The LOG CHECK INFORMATION function logs a message at the ERROR level in the test logs,
+    ...    with HTML formatting to display the text in orange.
+    ...    This function is used to record additional information that might be useful
+    ...    for understanding the course of the test, without necessarily indicating a failure.
     ...    
     ...    Arguments:
-    ...    ${message} : Le message à enregistrer dans le journal de test.
+    ...    ${message} (string) : The message to log in the test log.
     ...    
-    ...    Exemple d'utilisation:
-    ...    LOG CHECK INFORMATION    L'étape de validation a été exécutée mais la réponse n'était pas celle attendue. 
+    ...    Usage example :
+    ...    LOG CHECK INFORMATION    Validation step was executed but the response was not as expected.
 
     [Arguments]    ${message}
     Log    <h3 style="color: orange;">${message}</h3>    level=ERROR     html=True
@@ -160,15 +160,15 @@ GET CSS PROPERTY VALUE
 
 RETRY TEST
     [Documentation]
-    ...    La fonction RETRY TEST recharge la page en cours et enregistre l'information 
-    ...    dans le journal de test. Cette fonction est utile lorsque le test échoue en raison 
-    ...    d'une condition temporaire qui peut être résolue en rechargeant la page.
+    ...    The RETRY TEST function reloads the current page and logs the information
+    ...    in the test log. This function is useful when the test fails due to a
+    ...    temporary condition that can be resolved by reloading the page.
     ...    
-    ...    Comportement :
-    ...    1. Enregistrez le message "Reload test" dans le journal de test.
-    ...    2. Rechargez la page en cours.
+    ...    Behavior:
+    ...    1. Log the message "Reload test" in the test log.
+    ...    2. Reload the current page.
     ...    
-    ...    Exemple d'utilisation :
+    ...    Usage example :
     ...    RETRY TEST
 
     LOG CHECK INFORMATION    Reload test
@@ -177,21 +177,21 @@ RETRY TEST
 EXTRACT JSON TO DICTIONNARY
 # Possibilité de retourner sous différents formats
     [Documentation]
-    ...    La fonction EXTRACT JSON TO DICTIONARY lit un fichier JSON à partir d'un chemin d'accès spécifié, 
-    ...    convertit les données JSON en un dictionnaire Python et enregistre les données dans le journal de test.
-    ...    Cette fonction est utile pour lire des fichiers JSON qui contiennent des données de test ou des 
-    ...    configurations de test.
+    ...    The EXTRACT JSON TO DICTIONARY function reads a JSON file from a specified path,
+    ...    converts the JSON data into a Python dictionary and logs the data in the test log.
+    ...    This function is useful for reading JSON files that contain test data or test
+    ...    configurations.
     ...    
     ...    Arguments:
-    ...    ${path_json} : Le chemin d'accès du fichier JSON à lire.
+    ...    ${path_json} (str): The path of the JSON file to read.
     ...    
-    ...    Comportement :
-    ...    1. Utilisez la fonction utils.get_value_from_json pour lire le fichier JSON à partir de ${path_json} 
-    ...    et convertir les données JSON en un dictionnaire Python.
-    ...    2. Enregistrez le dictionnaire dans le journal de test.
-    ...    3. Retournez le dictionnaire.
+    ...    Behavior:
+    ...    1. Use the utils.get_value_from_json function to read the JSON file from ${path_json} 
+    ...    and convert the JSON data into a Python dictionary.
+    ...    2. Log the dictionary in the test log.
+    ...    3. Return the dictionary.
     ...    
-    ...    Exemple d'utilisation :
+    ...    Usage example :
     ...    ${data} = EXTRACT JSON TO DICTIONARY    /path/to/data.json
 
     [Arguments]    ${path_json}
@@ -203,23 +203,23 @@ EXTRACT JSON TO DICTIONNARY
 
 GET INDEX OF ELEMENT
     [Documentation]
-    ...    La fonction GET INDEX OF ELEMENT trouve l'index d'un élément spécifique dans une liste. 
-    ...    Si l'élément n'est pas trouvé dans la liste, la fonction échoue avec un message d'erreur.
-    ...    Cette fonction est utile lorsque vous devez trouver la position d'un élément spécifique dans une liste.
+    ...    The GET INDEX OF ELEMENT function finds the index of a specific element in a list. 
+    ...    If the element is not found in the list, the function fails with an error message.
+    ...    This function is useful when you need to find the position of a specific element in a list.
     ...    
     ...    Arguments:
-    ...    @{list} : La liste dans laquelle chercher.
-    ...    ${element} : L'élément à chercher dans la liste.
+    ...    @{list} (list): The list to search in.
+    ...    ${element} (various types): The element to search for in the list.
     ...    
-    ...    Comportement :
-    ...    1. Initialise une variable de retour à vide.
-    ...    2. Parcourez chaque élément de la liste avec son index.
-    ...    3. Comparez chaque élément de la liste avec ${element}.
-    ...    4. Si un élément de la liste est égal à ${element}, définissez la variable de retour à l'index de cet élément 
-    ...    et retournez cet index.
-    ...    5. Si aucun élément de la liste n'est égal à ${element}, échouez avec le message "L'élément n'est pas dans la liste."
+    ...    Behavior:
+    ...    1. Initialize a return variable to empty.
+    ...    2. Iterate over each element in the list with its index.
+    ...    3. Compare each element in the list with ${element}.
+    ...    4. If a list element is equal to ${element}, set the return variable to the index of this element 
+    ...    and return this index.
+    ...    5. If no list element is equal to ${element}, fail with the message "The element is not in the list."
     ...    
-    ...    Exemple d'utilisation :
+    ...    Usage example :
     ...    ${index} = GET INDEX OF ELEMENT    ${list}    "element"
 
     [Arguments]    @{list}    ${element}
