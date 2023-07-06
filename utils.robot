@@ -5,7 +5,7 @@ Library    SeleniumLibrary
 Library    DateTime
 Library    Collections
 Library    JSONLibrary
-Library    utils.py
+Library    utils/utils.py
 
 # pip install --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --trusted-host pypi.org bs4
 

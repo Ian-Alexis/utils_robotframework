@@ -45,5 +45,4 @@ Dashboard Transceiver
     Click Element    ${trash_logo}
     Validate Popup Confirmer
     Test Search Filter    NOM    Transceiver numéro 1    False
-
     Sleep    5s

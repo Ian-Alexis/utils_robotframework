@@ -133,9 +133,9 @@ Test Filter
 
     ${sort_test}=    Run Keyword And Return Status    Should Be True    ${noms} == ${noms_sorted}
     IF  ${sort_test}
-        LOG CHECK GOOD    The list of constructeur is sorted by ${filter_name}
+        LOG CHECK GOOD    The list is sorted by ${filter_name}
     ELSE
-        LOG CHECK WARNING    The list of constructeur is not sorted by ${filter_name}
+        LOG CHECK WARNING    The list of is not sorted by ${filter_name}
     END
 
 Test Search Filter
