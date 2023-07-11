@@ -1,0 +1,11 @@
+{
+    "Modèle_Templates" :{
+        "Modèle Équipement" : "ETX-203AX",
+        "Type" : "BPE",
+        "Configuration" : "Activation",
+        "Architecture" : "MPLS",
+        "Sécurisation" : "Aucune sécurisation",
+        "Etat" : "Collect",
+        "Rôle" : "PE livraison"
+    }
+}

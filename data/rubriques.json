@@ -1,0 +1,38 @@
+{
+    "Accueil" :{
+        "Accueil" : "https://anyway.qal.covage.com/dashboard"
+    },
+
+    "Constructeur" :{
+        "Construteur" : "https://anyway.qal.covage.com/constructors"
+    },
+
+    "Modele" :{
+        "Equipement" : "https://anyway.qal.covage.com/equipment_models",
+        "Cartes" : "https://anyway.qal.covage.com/card_models",
+        "Transceivers" : "https://anyway.qal.covage.com/transceivers",
+        "Licenses" : "https://anyway.qal.covage.com/licence_models",
+        "Templates" : "https://anyway.qal.covage.com/templates"
+    },
+
+    "Inventaire" :{
+        "Sites" : "https://anyway.qal.covage.com/sites",
+        "Racks" : "https://anyway.qal.covage.com/racks",
+        "NE" : "https://anyway.qal.covage.com/ne",
+        "Equipements" : "https://anyway.qal.covage.com/equipments",
+        "Cartes" : "https://anyway.qal.covage.com/cards",
+        "Licences" : "https://anyway.qal.covage.com/licences",
+        "Services" : "https://anyway.qal.covage.com/services",
+        "Collectes" : "https://anyway.qal.covage.com/collects"
+    },
+
+    "Production" :{
+        "Réservation" : "https://anyway.qal.covage.com/services/production/reservations",
+        "Prise en main" : "https://anyway.qal.covage.com/services/production/pems",
+        "Activation" : "https://anyway.qal.covage.com/services/production/activations",
+        "Pipelines" : "https://anyway.qal.covage.com/pipelines",
+        "Générateur VCID" : "https://anyway.qal.covage.com/production/vcid",
+        "Gestion CPE" : "https://anyway.qal.covage.com/production/cpe",
+        "Gestion Préfixes" :"https://anyway.qal.covage.com/prefixes"
+    }
+}
