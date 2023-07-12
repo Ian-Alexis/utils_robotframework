@@ -1,0 +1,11 @@
+{
+    "inventaire_sites" : ["Inventaire", "Sites", "https://anyway.qal.covage.com/sites"],
+    "inventaire_racks" : ["Inventaire", "Racks", "https://anyway.qal.covage.com/racks"],
+    "inventaire_equipements" : ["Inventaire", "Equipements", "https://anyway.qal.covage.com/equipments"],
+    "inventaire_cartes" : ["Inventaire", "Cartes", "https://anyway.qal.covage.com/cards"],
+    "inventaire_licences" : ["Inventaire", "Licences", "https://anyway.qal.covage.com/licences"],
+    "inventaire_services" : ["Inventaire", "Services", "https://anyway.qal.covage.com/services"],
+    "inventaire_collectes" : ["Inventaire", "Collectes", "https://anyway.qal.covage.com/collects"],
+    "modèle_templates" : ["Modèle", "Templates", "https://anyway.qal.covage.com/templates"],
+    "modèle_equipements" : ["Modèle", "Equipements", "https://anyway.qal.covage.com/equipment_models"]
+}

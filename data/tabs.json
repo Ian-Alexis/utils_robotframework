@@ -1,0 +1,6 @@
+{
+    "constructeurs" : ["", "Constructeur", "https://anyway.qal.covage.com/constructors"],
+    "modèle_cartes" : ["Modèle", "Cartes", "https://anyway.qal.covage.com/card_models"],
+    "modèle_transceivers" : ["Modèle", "Transceivers", "https://anyway.qal.covage.com/transceivers"],
+    "modèle_licences" : ["Modèle", "Licences", "https://anyway.qal.covage.com/licence_models"]
+}
