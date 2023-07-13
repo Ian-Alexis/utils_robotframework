@@ -4,6 +4,7 @@ import time
 
 url = "https://anyway.qal.covage.com"
 
+
 class connectAnyway():
     def __init__(self) -> None:
         self.playwright = sync_playwright().start()
@@ -14,20 +15,18 @@ class connectAnyway():
     def connect(self):
         self.page.goto(url)
 
-    @property
     def send_page(self):
         return self.page
-        
+
     def debug(self):
         self.context.tracing.start(screenshots=True, snapshots=True, sources=True)
 
     time.sleep(3)
 
+
 class constructeurClass(connectAnyway):
-    def __init__(self, test) -> None:
-        # super().__init__()
-        # superClass = super().__dict__()
-        print(connectAnyway())
+    def __init__(self, AW, test) -> None:
+        self.page = AW.page
         data = utils.extract_from_json("constructeurs")
         self.test = data[test]
         self.nom = data[test]["Nom"]
