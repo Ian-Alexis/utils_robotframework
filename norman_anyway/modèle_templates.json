@@ -1,0 +1,9 @@
+{
+    "Modèle équipement" : "ETX-203AX",
+    "Type" : "BPE",
+    "Configuration" : "Activation",
+    "Architecture" : "MPLS",
+    "Sécurisation" : "Aucune sécurisation",
+    "Etat" : "Collect",
+    "Rôle" : "PE livraison"
+}
