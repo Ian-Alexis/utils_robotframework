@@ -11,10 +11,17 @@ def test_myscript():
 def test(): 
     AW = CL.connectAnyway()
     AW.connect()
-    const_num_1_bis = CL.constructeurClass(AW, "Constructeur numéro 1")
-    const_num_1_bis.goto()
-    const_num_1_bis.erase()
-    const_num_1_bis.create()
+    # const_num_1_bis = CL.constructeurClass(AW, "Constructeur numéro 1")
+    # const_num_1_bis.goto()
+    # const_num_1_bis.erase()
+    # const_num_1_bis.create()
+
+    transceiver = CL.modeleTransceiverClass(AW, "Transceiver numéro 2")
+    transceiver.goto()
+    print(transceiver.header)
+    transceiver.erase()
+    transceiver.goto_add()
+    transceiver.create()
     CL.time.sleep(3)
     return True
 

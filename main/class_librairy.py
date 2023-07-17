@@ -34,6 +34,9 @@ class constructeurClass(connectAnyway):
     def goto(self):
         self.page.get_by_role("link", name=" Constructeurs").click()
 
+    # def goto_details(self):
+
+
     def create(self):
         self.page.get_by_role("link", name="").click()
         utils.fill_data("Nom", "input", self.nom, self.page)
@@ -43,46 +46,55 @@ class constructeurClass(connectAnyway):
 
     def erase(self):
         utils.erase_el(self.nom, self.page)
-        # # extract name of column
-        # page.wait_for_selector('//thead[@class="table-dark"]')
-        # headers = page.query_selector_all('th')
-        # # input data in filter search
-        # filter_search(self.__dict__, headers, page)
-        # # erase if element is find
-
 
 class modeleTransceiverClass():
-    def __init__(self, data) -> None:
-        self.constructeur = data["Constructeur"]
-        self.nom = data["Nom"]
-        self.reference = data["Référence"]
-        self.technique = data["Technique"]
-        self.type = data["Type"]
-        self.debit = data["Débit"]
-        self.distance = data["Distance (Km)"]
-        self.budget = data["Budget optique (dBm)"]
-        self.tx = data["Tx"]
-        self.rx = data["Rx"]
-        self.description = data["Description"]
+    def __init__(self, AW, test) -> None:
+        self.page = AW.page
+        data = utils.extract_from_json("modèle_transceivers")
+        self.constructeur = data[test]["Constructeur"]
+        self.nom = data[test]["Nom"]
+        self.reference = data[test]["Référence"]
+        self.technique = data[test]["Technique"]
+        self.type = data[test]["Type"]
+        self.debit = data[test]["Débit"]
+        self.distance = data[test]["Distance (Km)"]
+        self.budget_optique = data[test]["Budget optique (dBm)"]
+        self.tx = data[test]["Tx"]
+        self.rx = data[test]["Rx"]
+        self.description = data[test]["Description"]
+        self.header = []
+
+    def goto(self):
+        self.page.get_by_role("link", name=" Modèle").click()
+        self.page.get_by_role("link", name="Transceivers").click()
+        self.header = utils.get_header(self.page)
+    
+    def goto_add(self):
+        self.page.get_by_role("link", name="").click()
 
     def create(self):
-        utils.fill_data("Constructeur", "scrolling menu", self.constructeur)
-        utils.fill_data("Nom du modèle", "input", self.nom)
-        utils.fill_data("Référence", "input", self.reference)
-        utils.fill_data("Technique", "scrolling menu", self.technique)
-        utils.fill_data("Type", "scrolling menu", self.type)
-        utils.fill_data("Débit", "scrolling menu", self.debit)
-        utils.fill_data("Distance (Km)", "input", self.distance)
-        utils.fill_data("Budget optique (dBm)", "input", self.budget)
-        utils.fill_data("Tx", "input", self.tx)
-        utils.fill_data("Rx", "input", self.rx)
-        utils.fill_data("Description", "textarea", self.description)
+        utils.fill_data("Constructeur", "scrolling menu", self.constructeur, self.page)
+        utils.fill_data("Nom du modèle", "input", self.nom, self.page)
+        utils.fill_data("Référence", "input", self.reference, self.page)
+        utils.fill_data("Technique", "scrolling menu", self.technique, self.page)
+        utils.fill_data("Type", "scrolling menu", self.type, self.page)
+        utils.fill_data("Débit", "scrolling menu", self.debit, self.page)
+        utils.fill_data("Distance (Km)", "input", self.distance, self.page)
+        utils.fill_data("Budget optique (dBm)", "input", self.budget_optique, self.page)
+        utils.fill_data("Tx", "input", self.tx, self.page)
+        utils.fill_data("Rx", "input", self.rx, self.page)
+        utils.fill_data("Description", "textarea", self.description, self.page)
+        self.page.get_by_role("button", name="Ajouter").nth(1).click()
+        self.page.get_by_role("button", name="OK").click()
 
-    def erase(self, page):
+    def erase(self):
         # # extract name of column
         # page.wait_for_selector('//thead[@class="table-dark"]')
         # headers = page.query_selector_all('th')
         # # input data in filter search
         # filter_search(self.__dict__, headers, page)
         # # erase if element is find
-        utils.erase_el(self.nom, page)
+        utils.erase_el(self.nom, self.page)
+
+    def test_filter(self):
+        utils.test_whole_tab(self.page,"transceivers")

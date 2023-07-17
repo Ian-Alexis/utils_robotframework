@@ -1,4 +1,5 @@
 import json
+import time
 
 def connect_to_anyway(PS):
     # playwright=sync_playwright().start()
@@ -33,17 +34,21 @@ def fill_data(name, type, data, page):
 def erase_el(name, page):
     page.locator("#table-filter-name").click()
     page.locator("#table-filter-name").fill(name)
-    # element = page.wait_for_selector("//tbody/tr[2]")
-    # el = element.get_attribute("wire:key")
-    # print(el)
-    try:
+    time.sleep(1)
+    success = False
+    results_data = get_column_content(page, "Nom")
+    print(results_data)
+    for result in results_data:
+        if result == name:
+            success = True
+    if success:
         page.get_by_role("cell", name=name, exact=True).click(timeout=1000)
         page.get_by_role("button", name="").click()
         page.get_by_role("button", name="Confirmer").click()
         page.get_by_role("button", name="OK").click()
-    except:
-        print("Don't find")
-
+        print("Element {} found in order to erase".format(name))
+    else: 
+        print("Element {} not found in order to erase".format(name))
 
 def filter_search(page, data):
     # extract name of column
@@ -84,3 +89,91 @@ def find_index(liste, el):
         if element == el:
             index = i
     return index
+
+def get_column_index(page, column_name):
+    time.sleep(0.5)
+    # Find the column index by its name
+    try:
+        headers = page.query_selector_all('th')
+        column_index = None
+    except:
+        print("Je n'ai pas trouvé le header :/")
+
+    for i, header in enumerate(headers):
+        try:
+            if header.text_content().strip() == column_name:
+                column_index = i
+                break
+        except:
+            print("Je n'ai pas exécuté la boucle :(")
+
+    if column_index is None:
+        print(f'Column "{column_name}" not found')
+        return
+    return i
+
+def get_column_content(page, column_name, lower=False):
+    column_index = get_column_index(page, column_name)
+    # Get the column content
+    rows = page.query_selector_all('tr')
+    rows.pop(0) # On enlève le header 
+    column_content = []
+    for row in rows:
+        cells = row.query_selector_all('td')
+        if len(cells) > 1:
+            if lower:
+                column_content.append(cells[column_index].text_content().strip().lower())
+            else: 
+                column_content.append(cells[column_index].text_content().strip())
+    column_content_clean = [element.replace('\n','') for element in column_content]
+    column_content_clean.pop(0) # On enlève l'élément provenant du bandeau rechercher
+    return column_content_clean
+
+def test_whole_tab(page, tab, test=None):
+    # extract json file
+    with open("data/{}.json".format(tab), "r", encoding="utf-8") as file:
+        data_tab = json.load(file)
+    # extract name of column
+    page.wait_for_selector('//thead[@class="table-dark"]')
+    headers = page.query_selector_all('th')
+    # find all span
+    headers_data = []
+    for header in headers:
+        headers_data.append(header.text_content().strip())
+    headers_data.pop(0)
+    print(headers_data)
+    for header in headers_data:
+        unfiltered = get_column_content(page,header)
+        unfiltered.sort()
+        print("\n",unfiltered)
+        page.get_by_role("columnheader", name=header).get_by_role("img").click()
+        filtered = get_column_content(page,header)
+        print(filtered,"\n")
+        if filtered == unfiltered:
+            print(header,"filter works correctly")
+        else:
+            print(header,"filter doesn't work")    
+    for header in headers_data:
+        search = data_tab[header]
+        index = find_index(headers_data, header) + 2
+        xpath = '//tbody/tr/td[position()={}]/div'.format(index)
+        element = page.wait_for_selector(xpath)
+        page.click(xpath)
+        try:
+            if "input-group" in element.get_attribute("class"):
+                el = "/input"
+                xpath_input = '//tbody/tr/td[position()={}]/div{}'.format(index, el)
+                element_input = page.wait_for_selector(xpath_input)
+                element_input.fill(search)
+        except:
+            option = '//li/a/span[contains(text(),"{}")]'.format(search)
+            page.click(option)
+
+def get_header(page):
+    page.wait_for_selector('//thead[@class="table-dark"]')
+    headers = page.query_selector_all('th')
+    headers_data = []
+    for header in headers:
+        headers_data.append(header.text_content().strip())
+    headers_data.pop(0)
+    return headers_data

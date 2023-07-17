@@ -1,0 +1,43 @@
+{
+    "Transceiver numéro 1" :{
+        "Constructeur" : "Cisco",
+        "Nom" : "Transceiver numéro 1",
+        "Référence" : "Transceiver_numéro-1",
+        "Technique" : "Unidirectionnel",
+        "Type" : "RJ45",
+        "Débit" : "100M",
+        "Distance (Km)" : "2",
+        "Budget optique (dBm)" : "5",
+        "Tx" : "600",
+        "Rx" : "400",
+        "Description" : "Je m'appelle Norman"
+    },
+
+    "Transceiver numéro 1 Bis" :{
+        "Constructeur" : "Constructeur numéro 2",
+        "Nom" : "Transceiver numéro 1 Bis",
+        "Référence" : "Transceiver_numéro-2",
+        "Technique" : "Unidirectionnel",
+        "Type" : "RJ45",
+        "Débit" : "100M",
+        "Distance (Km)" : "2",
+        "Budget optique (dBm)" : "5",
+        "Tx" : "600",
+        "Rx" : "400",
+        "Description" : "Je m'appelle Norman"
+    },
+
+    "Transceiver numéro 2" :{
+        "Constructeur" : "GENERIC",
+        "Nom" : "Transceiver numéro 2",
+        "Référence" : "Transceiver_numéro-2",
+        "Technique" : "Unidirectionnel",
+        "Type" : "RJ45",
+        "Débit" : "100M",
+        "Distance (Km)" : "2",
+        "Budget optique (dBm)" : "5",
+        "Tx" : "600",
+        "Rx" : "400",
+        "Description" : "Je m'appelle Norman"
+    }
+}
