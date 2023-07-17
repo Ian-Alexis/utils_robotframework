@@ -62,12 +62,10 @@ class modeleTransceiverClass():
         self.tx = data[test]["Tx"]
         self.rx = data[test]["Rx"]
         self.description = data[test]["Description"]
-        self.header = []
 
     def goto(self):
         self.page.get_by_role("link", name=" Modèle").click()
         self.page.get_by_role("link", name="Transceivers").click()
-        self.header = utils.get_header(self.page)
     
     def goto_add(self):
         self.page.get_by_role("link", name="").click()

@@ -54,7 +54,6 @@ def get_column_content(page, column_name):
     column_content_clean.pop(0) # On enlève l'élément provenant du bandeau rechercher
 
     # print("\n",column_content_clean)
-
     return column_content_clean
 
 def select_scrolling_menu(page, menu_name, option_text):
@@ -149,10 +148,9 @@ def test_whole_tab(page, tab, test=None):
         filtered = get_column_content(page,header)
         print(filtered,"\n")
         if filtered == unfiltered:
-            print(header,"filter does work correctly")
+            print(header,"filter works correctly")
         else:
-            print(header,"filter doesn't work")
-            
+            print(header,"filter doesn't work")    
     for header in headers_data:
         search = data_tab[header]
         index = find_index(headers_data, header) + 2

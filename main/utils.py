@@ -92,28 +92,19 @@ def find_index(liste, el):
 
 def get_column_index(page, column_name):
     time.sleep(0.5)
+    headers = get_header(page)
+    print(headers)
     # Find the column index by its name
-    try:
-        headers = page.query_selector_all('th')
-        column_index = None
-    except:
-        print("Je n'ai pas trouvé le header :/")
-
     for i, header in enumerate(headers):
-        try:
-            if header.text_content().strip() == column_name:
-                column_index = i
-                break
-        except:
-            print("Je n'ai pas exécuté la boucle :(")
-
-    if column_index is None:
-        print(f'Column "{column_name}" not found')
-        return
-    return i
+        if header == column_name:
+            return i+1
+    return False
 
 def get_column_content(page, column_name, lower=False):
     column_index = get_column_index(page, column_name)
+    if not column_index:
+        print("L'indice n'a pas été trouvé")
+        return []
     # Get the column content
     rows = page.query_selector_all('tr')
     rows.pop(0) # On enlève le header 

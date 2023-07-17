@@ -60,7 +60,6 @@ def First_try():
             print("Don't find")
 """
 
-
 def Filter_try():
     with sync_playwright() as PS:
         # setup test

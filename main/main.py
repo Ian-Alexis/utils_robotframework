@@ -18,12 +18,10 @@ def test():
 
     transceiver = CL.modeleTransceiverClass(AW, "Transceiver numéro 2")
     transceiver.goto()
-    print(transceiver.header)
     transceiver.erase()
     transceiver.goto_add()
     transceiver.create()
     CL.time.sleep(3)
     return True
-
 
 test()
