@@ -28,7 +28,6 @@ class constructeurClass(connectAnyway):
     def __init__(self, AW, test) -> None:
         self.page = AW.page
         data = utils.extract_from_json("constructeurs")
-        self.test = data[test]
         self.nom = data[test]["Nom"]
         self.prefixe_mac = data[test]["Préfixe MAC"]
 
@@ -36,17 +35,20 @@ class constructeurClass(connectAnyway):
         self.page.get_by_role("link", name=" Constructeurs").click()
 
     def create(self):
-        utils.utils.fill_data("Nom", "input", self.nom)
-        utils.utils.fill_data("Préfixe MAC", "textarea", self.prefixe_mac)
+        self.page.get_by_role("link", name="").click()
+        utils.fill_data("Nom", "input", self.nom, self.page)
+        utils.fill_data("Préfixe MAC", "textarea", self.prefixe_mac, self.page)
+        self.page.get_by_role("button", name="Ajouter").nth(1).click()
+        self.page.get_by_role("button", name="OK").click()
 
-    def erase(self, page):
+    def erase(self):
+        utils.erase_el(self.nom, self.page)
         # # extract name of column
         # page.wait_for_selector('//thead[@class="table-dark"]')
         # headers = page.query_selector_all('th')
         # # input data in filter search
         # filter_search(self.__dict__, headers, page)
         # # erase if element is find
-        utils.erase_el(self.nom, page)
 
 
 class modeleTransceiverClass():

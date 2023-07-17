@@ -14,7 +14,7 @@ def connect_to_anyway(PS):
     return page
 
 
-def fill_data(name, type, data):
+def fill_data(name, type, data, page):
     base_xpath = "//label[contains(text(), '{}')]".format(name)
     if type == "scrolling menu":
         full_xpath = "/following-sibling::div"
