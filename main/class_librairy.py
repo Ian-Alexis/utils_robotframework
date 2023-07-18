@@ -28,14 +28,21 @@ class constructeurClass(connectAnyway):
     def __init__(self, AW, test) -> None:
         self.page = AW.page
         data = utils.extract_from_json("constructeurs")
+        self.data = data[test]
         self.nom = data[test]["Nom"]
         self.prefixe_mac = data[test]["Préfixe MAC"]
 
     def goto(self):
         self.page.get_by_role("link", name=" Constructeurs").click()
 
-    # def goto_details(self):
+    def goto_details(self):
+        utils.test_search(self.page, self.data)
+        self.page.get_by_role("cell", name=self.nom, exact=True).click()
 
+    def goto_breadcrumb(self):
+        self.page.get_by_role(
+            "navigation", name="breadcrumb"
+        ).get_by_role("link", name="Constructeurs").click()
 
     def create(self):
         self.page.get_by_role("link", name="").click()
@@ -46,11 +53,18 @@ class constructeurClass(connectAnyway):
 
     def erase(self):
         utils.erase_el(self.nom, self.page)
+    
+    def test_filter(self):
+        utils.test_filter(self.page, self.data)
+    
+    def test_search(self):
+        utils.test_search(self.page, self.data)
 
 class modeleTransceiverClass():
     def __init__(self, AW, test) -> None:
         self.page = AW.page
         data = utils.extract_from_json("modèle_transceivers")
+        self.data = data[test]
         self.constructeur = data[test]["Constructeur"]
         self.nom = data[test]["Nom"]
         self.reference = data[test]["Référence"]
@@ -67,8 +81,17 @@ class modeleTransceiverClass():
         self.page.get_by_role("link", name=" Modèle").click()
         self.page.get_by_role("link", name="Transceivers").click()
     
-    def goto_add(self):
+    def goto_create(self):
         self.page.get_by_role("link", name="").click()
+
+    def goto_details(self):
+        utils.test_search(self.page, self.data)
+        self.page.get_by_role("cell", name=self.nom, exact=True).click()
+
+    def goto_breadcrumb(self):
+        self.page.get_by_role(
+            "navigation", name="breadcrumb"
+        ).get_by_role("link", name="Transceivers").click()
 
     def create(self):
         utils.fill_data("Constructeur", "scrolling menu", self.constructeur, self.page)
@@ -84,15 +107,28 @@ class modeleTransceiverClass():
         utils.fill_data("Description", "textarea", self.description, self.page)
         self.page.get_by_role("button", name="Ajouter").nth(1).click()
         self.page.get_by_role("button", name="OK").click()
+    
+    def fill_detail(self, test):
+        data = utils.extract_from_json("modèle_transceivers")
+        utils.fill_data("Constructeur", "scrolling menu", data[test]["Constructeur"], self.page)
+        utils.fill_data("Nom du modèle", "input", data[test]["Nom"], self.page)
+        utils.fill_data("Référence", "input", data[test]["Référence"], self.page)
+        utils.fill_data("Technique", "scrolling menu", data[test]["Technique"], self.page)
+        utils.fill_data("Type", "scrolling menu", data[test]["Type"], self.page)
+        utils.fill_data("Débit", "scrolling menu", data[test]["Débit"], self.page)
+        utils.fill_data("Distance (Km)", "input", data[test]["Distance (Km)"], self.page)
+        utils.fill_data("Budget optique (dBm)", "input", data[test]["Budget optique (dBm)"], self.page)
+        utils.fill_data("Tx", "input", data[test]["Tx"], self.page)
+        utils.fill_data("Rx", "input", data[test]["Rx"], self.page)
+        utils.fill_data("Description", "textarea", data[test]["Description"], self.page)
+        self.page.get_by_role("button", name="").nth(1).click()
+        self.page.get_by_role("button", name="OK").click()
 
     def erase(self):
-        # # extract name of column
-        # page.wait_for_selector('//thead[@class="table-dark"]')
-        # headers = page.query_selector_all('th')
-        # # input data in filter search
-        # filter_search(self.__dict__, headers, page)
-        # # erase if element is find
         utils.erase_el(self.nom, self.page)
 
     def test_filter(self):
-        utils.test_whole_tab(self.page,"transceivers")
+        utils.test_filter(self.page, self.data)
+
+    def test_search(self):
+        utils.test_search(self.page, self.data)

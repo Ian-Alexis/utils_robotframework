@@ -15,20 +15,39 @@ def connect_to_anyway(PS):
     return page
 
 
-def fill_data(name, type, data, page):
+def fill_data(name, element_type, data, page, check=False):
     base_xpath = "//label[contains(text(), '{}')]".format(name)
-    if type == "scrolling menu":
+    if element_type == "scrolling menu":
         full_xpath = "/following-sibling::div"
         option = "//li/a/span[contains(text(), '{}')]".format(data)
         page.wait_for_selector(base_xpath + full_xpath).click()
         page.wait_for_selector(option).click()
     else:
-        if type == 'input':
+        if element_type == 'input':
             full_xpath = "/following-sibling::input[1]"
-        elif type == 'textarea':
+        elif element_type == 'textarea':
             full_xpath = "/following-sibling::textarea[1]"
         page.wait_for_selector(base_xpath + full_xpath).fill(data)
+    if check:
+        check_data(name, base_xpath + full_xpath, element_type, data, page)
     return True
+
+def check_data(name, xpath, element_type, data, page):
+    print("\n\n")
+    if element_type != "scrolling menu":
+        content_text = str(page.query_selector(xpath).get_property('value'))
+    else : 
+        xpath_adding = "/button"
+        content_text = str(page.query_selector(xpath+xpath_adding).get_attribute('title'))
+        print(xpath+xpath_adding)
+        print(content_text)
+    if data == content_text:
+        print("The {} {} is well filled".format(element_type, name))
+    else : 
+        print("The {} {} is not well filled".format(element_type, name))
+
+
+
 
 
 def erase_el(name, page):
@@ -42,7 +61,7 @@ def erase_el(name, page):
         if result == name:
             success = True
     if success:
-        page.get_by_role("cell", name=name, exact=True).click(timeout=1000)
+        page.get_by_role("cell", name=name, exact=True).click()
         page.get_by_role("button", name="").click()
         page.get_by_role("button", name="Confirmer").click()
         page.get_by_role("button", name="OK").click()
@@ -93,7 +112,6 @@ def find_index(liste, el):
 def get_column_index(page, column_name):
     time.sleep(0.5)
     headers = get_header(page)
-    print(headers)
     # Find the column index by its name
     for i, header in enumerate(headers):
         if header == column_name:
@@ -120,45 +138,53 @@ def get_column_content(page, column_name, lower=False):
     column_content_clean.pop(0) # On enlève l'élément provenant du bandeau rechercher
     return column_content_clean
 
-def test_whole_tab(page, tab, test=None):
-    # extract json file
-    with open("data/{}.json".format(tab), "r", encoding="utf-8") as file:
-        data_tab = json.load(file)
+def test_filter(page, data, test=None):
     # extract name of column
-    page.wait_for_selector('//thead[@class="table-dark"]')
-    headers = page.query_selector_all('th')
-    # find all span
-    headers_data = []
+    headers = get_header(page)
     for header in headers:
-        headers_data.append(header.text_content().strip())
-    headers_data.pop(0)
-    print(headers_data)
-    for header in headers_data:
-        unfiltered = get_column_content(page,header)
-        unfiltered.sort()
-        print("\n",unfiltered)
+        unfiltered = get_column_content(page,header, lower=True)
+        if header == "Débit":
+            unfiltered = custom_sort_key(unfiltered)
+        else :
+            unfiltered.sort()
+        # print(unfiltered)
         page.get_by_role("columnheader", name=header).get_by_role("img").click()
-        filtered = get_column_content(page,header)
-        print(filtered,"\n")
+        filtered = get_column_content(page,header, lower=True)
+        # print(filtered)
         if filtered == unfiltered:
-            print(header,"filter works correctly")
+            print("{} filter works correctly".format(header))
         else:
-            print(header,"filter doesn't work")    
-    for header in headers_data:
-        search = data_tab[header]
-        index = find_index(headers_data, header) + 2
+            print("{} filter doesn't work".format(header)) 
+        # print("\n\n")  
+
+def test_search(page, data, test=None): 
+    headers = get_header(page)
+    for header in headers:
+        search = data[header]
+        index = find_index(headers, header) + 2
+        # index  = get_column_index(page, header)
         xpath = '//tbody/tr/td[position()={}]/div'.format(index)
         element = page.wait_for_selector(xpath)
         page.click(xpath)
-        try:
+        var = element.query_selector('*')
+        # print('Le nom de la colonne {} est associé à :\n{}'.format(header, var.text_content()))
+        if var.text_content() == '':
+            # if input : 
             if "input-group" in element.get_attribute("class"):
                 el = "/input"
                 xpath_input = '//tbody/tr/td[position()={}]/div{}'.format(index, el)
                 element_input = page.wait_for_selector(xpath_input)
                 element_input.fill(search)
-        except:
-            option = '//li/a/span[contains(text(),"{}")]'.format(search)
-            page.click(option)
+        else:
+            # print(element.query_selector('*').get_attribute('class'))
+            # if scrolling menu multiple choice :
+            if 'show-tick' in element.query_selector('*').get_attribute('class'):
+                option = '//li/a/span[contains(text(),"{}")]'.format(search)
+                page.click(option)
+            # if single choice : 
+            else :
+                option = '//li/a/span[contains(text(),"{}")]'.format(search)
+                page.click(option)
 
 def get_header(page):
     page.wait_for_selector('//thead[@class="table-dark"]')
@@ -168,3 +194,25 @@ def get_header(page):
         headers_data.append(header.text_content().strip())
     headers_data.pop(0)
     return headers_data
+
+def custom_sort_key(list):
+    sorted = []
+    sorted_ = []
+    sorted_m = []
+    sorted_g = []
+    for debit in list:
+        digits = ''.join(filter(str.isdigit, debit))
+        letters = ''.join(filter(str.isalpha, debit))
+        if debit == "":
+            sorted_.append(debit)
+        elif letters == "m":
+            sorted_m.append(debit)
+        else: 
+            sorted_g.append(debit)
+    sorted_g.sort()
+    sorted_g.reverse()
+    sorted_m.sort()
+    sorted_m.reverse()
+    sorted = sorted_+sorted_m+sorted_g
+    
+    return sorted
