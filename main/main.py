@@ -1,5 +1,8 @@
 import class_librairy as CL
 
+url = "https://anyway.qal.covage.com"
+
+
 def test_myscript():
     if test():
         # os.system(commande)
@@ -10,12 +13,11 @@ def test_myscript():
 
 def test(): 
     AW = CL.connectAnyway()
-    AW.connect()
-    # const_num_1_bis = CL.constructeurClass(AW, "Constructeur numéro 1")
-    # const_num_1_bis.goto()
-    # const_num_1_bis.erase()
-    # const_num_1_bis.create()
-
+    AW.connect(url)
+    const_num_1_bis = CL.constructeurClass(AW, "Constructeur numéro 1 Bis")
+    const_num_1_bis.goto()
+    const_num_1_bis.erase()
+    const_num_1_bis.create()
     transceiver = CL.modeleTransceiverClass(AW, "Transceiver numéro 2")
     transceiver.goto()
     transceiver.erase()

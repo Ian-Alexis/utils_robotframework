@@ -2,8 +2,6 @@ import utils as utils
 from playwright.sync_api import sync_playwright
 import time
 
-url = "https://anyway.qal.covage.com"
-
 
 class connectAnyway():
     def __init__(self) -> None:
@@ -12,7 +10,7 @@ class connectAnyway():
         self.context = self.browser.new_context()
         self.page = self.context.new_page()
 
-    def connect(self):
+    def connect(self, url):
         self.page.goto(url)
 
     def send_page(self):
@@ -20,8 +18,6 @@ class connectAnyway():
 
     def debug(self):
         self.context.tracing.start(screenshots=True, snapshots=True, sources=True)
-
-    time.sleep(3)
 
 
 class constructeurClass(connectAnyway):
