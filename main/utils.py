@@ -223,8 +223,6 @@ def test_header_filter(page, element):
     time.sleep(1)
 
     checkboxes = page.query_selector_all('//div[@class="form-check ms-2"]/input[@type="checkbox"]')
-    # checkboxes_label = page.query_selector_all('//div[@class="form-check ms-2"]/input[@type="checkbox"]/following-sibling::label')
-
     checked_checkboxes = []
 
     for checkbox in checkboxes:
@@ -237,20 +235,6 @@ def test_header_filter(page, element):
         print("\n")
 
     print(checked_checkboxes)
-
-    # # Utilisation de XPath pour sélectionner toutes les cases à cocher
-    # checkboxes = page.query_selector_all('//div[@class="form-check ms-2"]/input[@type="checkbox"]/following-sibling::label')
-    # print(checkboxes)
-
-    # # Liste pour stocker les textes des options cochées
-    # checked_options = []
-
-    # for checkbox in checkboxes:
-    #     # print(checkbox.is_checked())
-    #     print(checkbox.inner_text())
-    #     print(type(checkbox))
-    #     checked_options.append(str(checkbox.inner_text()))
-    # print('Options cochées:', checked_options)
 
     # header_before = get_header(page)
     # print(header_before)
