@@ -32,7 +32,7 @@ def test():
 
     transceiver_2 = CL.modeleTransceiverClass(AW, "Transceiver numéro 2")
     transceiver_2.goto()
-    transceiver_2.test_header_filter('Type')
+    transceiver_2.test_header_filter(['Type', 'Référence'])
     # transceiver_2.goto_create()
     # transceiver_2.create()
     # transceiver_2.goto_breadcrumb()

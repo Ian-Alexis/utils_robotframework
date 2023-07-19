@@ -217,16 +217,8 @@ def custom_sort_key(list):
     
     return sorted
 
-def test_header_filter(page, element):
-    page.wait_for_selector('//*[@id="columnSelect-table"]').click()
-    page.wait_for_selector('//div[@class="form-check ms-2"]/input[@type="checkbox"]').click()
-    time.sleep(1)
-
-    checkboxes = page.query_selector_all('//div[@class="form-check ms-2"]/input[@type="checkbox"]')
-    # checkboxes_label = page.query_selector_all('//div[@class="form-check ms-2"]/input[@type="checkbox"]/following-sibling::label')
-
+def extract_check_element(page, checkboxes):
     checked_checkboxes = []
-
     for checkbox in checkboxes:
         if checkbox.is_checked():
             print("J'ai trouvé une checkbox cochée")
@@ -234,9 +226,23 @@ def test_header_filter(page, element):
             checked_checkboxes.append(checkbox.evaluate_handle('el => el.nextElementSibling').inner_text())
         else : 
             print("J'ai trouvé une checkbox pas cochée")
-        print("\n")
+    return checked_checkboxes
 
-    print(checked_checkboxes)
+def test_header_filter(page, elements):
+    page.wait_for_selector('//*[@id="columnSelect-table"]').click()
+    time.sleep(1)
+
+    checkboxes = page.query_selector_all('//div[@class="form-check ms-2"]/input[@type="checkbox"]')
+    checked_checkboxes_before = extract_check_element(page, checkboxes)
+        
+    for element in elements :
+        xpath_option = "//label[contains(text(), '{}')]/preceding-sibling::input".format(element)
+        page.wait_for_selector(xpath_option).click()
+    
+    checked_checkboxes_after = extract_check_element(page, checkboxes)
+    print(checked_checkboxes_before)
+    print (checked_checkboxes_after)
+    
 
     # # Utilisation de XPath pour sélectionner toutes les cases à cocher
     # checkboxes = page.query_selector_all('//div[@class="form-check ms-2"]/input[@type="checkbox"]/following-sibling::label')
