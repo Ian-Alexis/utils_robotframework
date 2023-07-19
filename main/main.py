@@ -3,6 +3,9 @@ import os
 
 commande = "playwright show-trace out/trace.zip"
 
+url = "https://anyway.qal.covage.com"
+
+
 def test_myscript():
     if test():
         os.system(commande)
@@ -13,17 +16,16 @@ def test_myscript():
 
 def test(): 
     AW = CL.connectAnyway()
-    AW.connect()
+    AW.connect(url)
     AW.debug()
-    # const_num_1_bis = CL.constructeurClass(AW, "Constructeur numéro 1")
-    # const_num_1_bis.goto()
+    const_num_1_bis = CL.constructeurClass(AW, "Constructeur numéro 1 Bis")
+    const_num_1_bis.goto()
     # const_num_1_bis.goto_details()
     # const_num_1_bis.goto_breadcrumb()
     # const_num_1_bis.test_filter()
     # const_num_1_bis.test_search()
-    # const_num_1_bis.erase()
-    # const_num_1_bis.create()
-
+    const_num_1_bis.erase()
+    const_num_1_bis.create()
     transceiver_2 = CL.modeleTransceiverClass(AW, "Transceiver numéro 2")
     transceiver_2.goto()
     transceiver_2.goto_create()
