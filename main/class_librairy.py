@@ -119,6 +119,9 @@ class modeleTransceiverClass():
         utils.fill_data("Description", "textarea", data[test]["Description"], self.page)
         self.page.get_by_role("button", name="").nth(1).click()
         self.page.get_by_role("button", name="OK").click()
+    
+    def test_header_filter(self, element):
+        utils.test_header_filter(self.page, element)
 
     def erase(self):
         utils.erase_el(self.nom, self.page)

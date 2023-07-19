@@ -216,3 +216,29 @@ def custom_sort_key(list):
     sorted = sorted_+sorted_m+sorted_g
     
     return sorted
+
+def test_header_filter(page, element):
+    xpath = '//div[@aria-labelledby="columnSelect-table"]'
+    text = page.query_selector(xpath).get_property('value')
+    print(text) 
+
+    # header_before = get_header(page)
+    # print(header_before)
+    # test_before = search_element_in_header(header_before, element)
+
+    # page.get_by_role("button", name="Colonnes").click()
+
+    # header_after = get_header(page)
+    # print(header_after)
+    # test_after = search_element_in_header(header_after, element)
+
+    # test_taille = len(header_after) == len(header_before) - 1
+
+    # return test_before and test_taille and not test_after
+
+def search_element_in_header(headers, element):
+    test = False
+    for header in headers:
+        if header == element:
+            test = True
+    return test
