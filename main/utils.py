@@ -46,10 +46,6 @@ def check_data(name, xpath, element_type, data, page):
     else : 
         print("The {} {} is not well filled".format(element_type, name))
 
-
-
-
-
 def erase_el(name, page):
     page.locator("#table-filter-name").click()
     page.locator("#table-filter-name").fill(name)
@@ -284,3 +280,19 @@ def search_element_in_header(headers, element):
         if header == element:
             test = True
     return test
+
+def test_displayed_filter(page, number):
+    xpath_num_page = '//*[@id="perPage"]/following-sibling::button'
+    page.wait_for_selector(xpath_num_page).click()
+    xpath_list_page = '{}/following-sibling::div/div[@role="listbox"]'.format(xpath_num_page)
+    page.wait_for_selector(xpath_list_page)
+    option = "//li/a/span[contains(text(), '{}')]".format(number)
+    page.wait_for_selector(option).click()
+    page.wait_for_selector('//nav/ul[@class="pagination"]')
+    # time.sleep(5)
+    get_rows_number(page)
+
+def get_rows_number(page):
+    all_rows = page.wait_for_selector('//tbody')
+    rows = all_rows.query_selector_all('tr')
+    print(len(rows)-1)

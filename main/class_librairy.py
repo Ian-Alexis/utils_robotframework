@@ -40,21 +40,38 @@ class constructeurClass(connectAnyway):
             "navigation", name="breadcrumb"
         ).get_by_role("link", name="Constructeurs").click()
 
-    def create(self):
+    def goto_create(self):
         self.page.get_by_role("link", name="").click()
+
+    def create(self):
         utils.fill_data("Nom", "input", self.nom, self.page)
         utils.fill_data("Préfixe MAC", "textarea", self.prefixe_mac, self.page)
         self.page.get_by_role("button", name="Ajouter").nth(1).click()
         self.page.get_by_role("button", name="OK").click()
 
+    def multiple_create(self,n):
+        for i in range(n):
+            self.goto_create()
+            self.nom = "Constructeur multiple numéro {}".format(i+1)
+            self.create()
+            self.goto_breadcrumb()
+
     def erase(self):
         utils.erase_el(self.nom, self.page)
     
+    def multiple_erase(self,n):
+        for i in range(n):
+            self.nom = "Constructeur multiple numéro {}".format(i+1)
+            self.erase()
+
     def test_filter(self):
         utils.test_filter(self.page, self.data)
     
     def test_search(self):
         utils.test_search(self.page, self.data)
+
+    def test_displayed_filter(self, number):
+        utils.test_displayed_filter(self.page, number)
 
 class modeleTransceiverClass():
     def __init__(self, AW, test) -> None:
