@@ -217,38 +217,66 @@ def custom_sort_key(list):
     
     return sorted
 
-def test_header_filter(page, element):
-    page.wait_for_selector('//*[@id="columnSelect-table"]').click()
-    page.wait_for_selector('//div[@class="form-check ms-2"]/input[@type="checkbox"]').click()
-    time.sleep(1)
-
-    checkboxes = page.query_selector_all('//div[@class="form-check ms-2"]/input[@type="checkbox"]')
+def extract_checked_element(page, checkboxes):
     checked_checkboxes = []
-
     for checkbox in checkboxes:
         if checkbox.is_checked():
-            print("J'ai trouvé une checkbox cochée")
-            print(checkbox.evaluate_handle('el => el.nextElementSibling').inner_text())
             checked_checkboxes.append(checkbox.evaluate_handle('el => el.nextElementSibling').inner_text())
+            # print("J'ai trouvé une checkbox cochée")
+            # print(checkbox.evaluate_handle('el => el.nextElementSibling').inner_text())
+        # else : 
+            # print("J'ai trouvé une checkbox pas cochée")
+    return checked_checkboxes
+
+def test_header_filter(page, elements):
+    page.wait_for_selector('//*[@id="columnSelect-table"]').click()
+    checkboxes = page.query_selector_all('//div[@class="form-check ms-2"]/input[@type="checkbox"]')
+    checked_checkboxes_before = extract_checked_element(page, checkboxes)
+    headers_before = get_header(page)    
+    check_checkboxes(page, elements)
+    checked_checkboxes_after = extract_checked_element(page, checkboxes)
+    headers_after = get_header(page)
+    check_header_filter(elements, checked_checkboxes_before, checked_checkboxes_after, headers_before, headers_after)
+    check_checkboxes(page, elements, visible=True)
+    headers_after = get_header(page)
+    if headers_after == checked_checkboxes_before :
+        print("Checkboxes rechecked")
+    else : 
+        print("Checkboxes still unchecked")
+    page.wait_for_selector('//*[@id="columnSelect-table"]').click()
+
+def check_checkboxes(page, elements, visible=False):
+    for element in elements :
+        xpath_option = "//label[contains(text(), '{}')]/preceding-sibling::input".format(element)
+        page.wait_for_selector(xpath_option).click()
+        xpath_column_name = '//th/div/span[contains(text(),"{}")]'.format(element)
+        page.wait_for_selector(xpath_column_name)
+        element = page.query_selector(xpath_column_name)
+        if visible :
+            element.wait_for_element_state('visible')
         else : 
-            print("J'ai trouvé une checkbox pas cochée")
-        print("\n")
+            element.wait_for_element_state('hidden')
+    
 
-    print(checked_checkboxes)
-
-    # header_before = get_header(page)
-    # print(header_before)
-    # test_before = search_element_in_header(header_before, element)
-
-    # page.get_by_role("button", name="Colonnes").click()
-
-    # header_after = get_header(page)
-    # print(header_after)
-    # test_after = search_element_in_header(header_after, element)
-
-    # test_taille = len(header_after) == len(header_before) - 1
-
-    # return test_before and test_taille and not test_after
+def check_header_filter(elements, checked_checkboxes_before, checked_checkboxes_after, headers_before, headers_after):
+    test_size = len(checked_checkboxes_before) - len(checked_checkboxes_after) == len(elements)
+    if test_size : 
+        test_elements = True 
+        for element in elements :
+            for checkbox in checked_checkboxes_after :
+                if not test_elements :
+                    print("{} element is still checked".format(element))
+                    break
+                elif element == checkbox :
+                    test_elements = False
+        if headers_before == checked_checkboxes_before :
+            print("All filtered elements are present in the header before filtering")
+        else :
+            print("Missing filterd element in the header before filtering")
+        if headers_after == checked_checkboxes_after :
+            print("All filtered elements are present in the header after filtering")
+        else : 
+            print("Missing filterd element in the header after filtering")
 
 def search_element_in_header(headers, element):
     test = False

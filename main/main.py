@@ -1,5 +1,7 @@
 import class_librairy as CL
 import os 
+import random
+import matplotlib.pyplot as plt 
 
 commande = "playwright show-trace out/trace.zip"
 
@@ -32,19 +34,21 @@ def test():
 
     transceiver_2 = CL.modeleTransceiverClass(AW, "Transceiver numéro 2")
     transceiver_2.goto()
-    transceiver_2.test_header_filter('Type')
-    # transceiver_2.goto_create()
-    # transceiver_2.create()
-    # transceiver_2.goto_breadcrumb()
-    # transceiver_2.goto_details()
-    # transceiver_2.fill_detail("Transceiver numéro 1 Bis")
-    # transceiver_2.test_filter()
-    # transceiver_2.test_search()
-    # transceiver_2.erase()
-    # transceiver_2.goto_create()
-    # transceiver.create()
+    times = []
+    for i in range(50):
+        start_time = CL.time.time()
+        transceiver_2.goto_create()
+        transceiver_2.create()
+        transceiver_2.goto_breadcrumb()
+        transceiver_2.erase()
+        end_time = CL.time.time()
+        execution_time = end_time - start_time
+        times.append(execution_time)
 
     AW.context.tracing.stop(path="out/trace.zip")
+
+    plt.plot(times)
+    plt.show()
 
     return True
 
