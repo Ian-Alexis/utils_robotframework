@@ -2,7 +2,6 @@ import utils as utils
 from playwright.sync_api import sync_playwright
 import time
 
-
 class connectAnyway():
     def __init__(self) -> None:
         self.playwright = sync_playwright().start()
@@ -46,7 +45,15 @@ class constructeurClass(connectAnyway):
     def create(self):
         utils.fill_data("Nom", "input", self.nom, self.page)
         utils.fill_data("Préfixe MAC", "textarea", self.prefixe_mac, self.page)
-        self.page.get_by_role("button", name="Ajouter").nth(1).click()
+        try : 
+            self.page.get_by_role("button", name="Ajouter").nth(1).click(timeout=500)
+        except : 
+            try :
+                self.page.get_by_role("button", name="").nth(1).click()
+            except : 
+                print("validation button not found")
+    
+    def click_ok(self):
         self.page.get_by_role("button", name="OK").click()
 
     def multiple_create(self,n):
@@ -118,7 +125,15 @@ class modeleTransceiverClass():
         utils.fill_data("Tx", "input", self.tx, self.page)
         utils.fill_data("Rx", "input", self.rx, self.page)
         utils.fill_data("Description", "textarea", self.description, self.page)
-        self.page.get_by_role("button", name="Ajouter").nth(1).click()
+        try : 
+            self.page.get_by_role("button", name="Ajouter").nth(1).click(timeout=500)
+        except : 
+            try :
+                self.page.get_by_role("button", name="").nth(1).click()
+            except : 
+                print("validation button not found")
+
+    def click_ok(self):
         self.page.get_by_role("button", name="OK").click()
     
     def fill_detail(self, test):
