@@ -45,13 +45,13 @@ class constructeurClass(connectAnyway):
     def create(self):
         utils.fill_data("Nom", "input", self.nom, self.page)
         utils.fill_data("Préfixe MAC", "textarea", self.prefixe_mac, self.page)
-        try : 
-            self.page.get_by_role("button", name="Ajouter").nth(1).click(timeout=500)
-        except : 
-            try :
-                self.page.get_by_role("button", name="").nth(1).click()
-            except : 
-                print("validation button not found")
+        self.page.get_by_role("button", name="Ajouter").nth(1).click()
+
+    def fill_detail(self, test):
+        data = utils.extract_from_json("constructeurs")
+        utils.fill_data("Nom", "input", data[test]["Nom"], self.page)
+        utils.fill_data("Préfixe MAC", "textarea", data[test]["Préfixe MAC"], self.page)
+        self.page.get_by_role("button", name="").nth(1).click()
     
     def click_ok(self):
         self.page.get_by_role("button", name="OK").click()
@@ -125,13 +125,7 @@ class modeleTransceiverClass():
         utils.fill_data("Tx", "input", self.tx, self.page)
         utils.fill_data("Rx", "input", self.rx, self.page)
         utils.fill_data("Description", "textarea", self.description, self.page)
-        try : 
-            self.page.get_by_role("button", name="Ajouter").nth(1).click(timeout=500)
-        except : 
-            try :
-                self.page.get_by_role("button", name="").nth(1).click()
-            except : 
-                print("validation button not found")
+        self.page.get_by_role("button", name="Ajouter").nth(1).click(timeout=500)
 
     def click_ok(self):
         self.page.get_by_role("button", name="OK").click()
@@ -150,7 +144,6 @@ class modeleTransceiverClass():
         utils.fill_data("Rx", "input", data[test]["Rx"], self.page)
         utils.fill_data("Description", "textarea", data[test]["Description"], self.page)
         self.page.get_by_role("button", name="").nth(1).click()
-        self.page.get_by_role("button", name="OK").click()
     
     def test_header_filter(self, element):
         utils.test_header_filter(self.page, element)

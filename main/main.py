@@ -29,6 +29,8 @@ def test():
     const_num_1_bis.test_displayed_filter('10')
     const_num_1_bis.multiple_erase(10)
 
+    transceiver_2  = CL.modeleTransceiverClass(AW, "Transceiver numéro ")
+
     # const_num_1_bis.goto_details()
     # const_num_1_bis.goto_breadcrumb()
     # const_num_1_bis.test_filter()
@@ -49,6 +51,12 @@ def test():
     #     end_time = CL.time.time()
     #     execution_time = end_time - start_time
     #     times.append(execution_time)
+
+    transceiver_2.test_filter()
+    headers = CL.utils.get_header(AW.page)
+    for i in range(30):
+        elements = random.sample(headers, k=random.randint(1, len(headers)))
+        transceiver_2.test_header_filter(elements)
 
     AW.context.tracing.stop(path="out/trace.zip")
 

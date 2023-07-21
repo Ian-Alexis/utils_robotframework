@@ -1,8 +1,14 @@
 {
-    "Constructeur numéro 1" :{
+    "Constructeur numéro 1.0" :{
         "Nom" : "Constructeur numéro 1",
         "Préfixe MAC" : ""
     },
+
+    "Constructeur numéro 1.1" :{
+        "Nom" : "Constructeur numéro 1",
+        "Préfixe MAC" : ""
+    },
+    
     "Constructeur numéro 1 Bis" :{
         "Nom" : "Constructeur numéro 1 Bis",
         "Préfixe MAC" : "00:20:d3"

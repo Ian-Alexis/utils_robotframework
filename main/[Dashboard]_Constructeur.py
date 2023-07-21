@@ -17,7 +17,7 @@ def test():
     AW.connect(url)
     AW.debug()
 
-    constructeur_1 = CL.constructeurClass(AW, "Constructeur numéro 1")
+    constructeur_1 = CL.constructeurClass(AW, "Constructeur numéro 1.0")
     constructeur_1_bis = CL.constructeurClass(AW, "Constructeur numéro 1 Bis")
     constructeur_2 = CL.constructeurClass(AW, "Constructeur numéro 2")
 
@@ -30,19 +30,19 @@ def test():
     constructeur_1.create()
     constructeur_1.click_ok()
     constructeur_1.goto_breadcrumb()
-    constructeur_1.prefixe_mac = "00:20:d3"
     constructeur_1.goto_create()
+    constructeur_1.prefixe_mac = "00:20:d3"
     constructeur_1.create()
-
     constructeur_1_bis.create()
     constructeur_1_bis.click_ok()
+    constructeur_1_bis.goto_breadcrumb()
 
-    constructeur_2.create()
+    constructeur_1_bis.goto_details()
+    constructeur_2.fill_detail("Constructeur numéro 2")
     constructeur_2.click_ok()
-
-    constructeur_1.create()
-
+    constructeur_1.fill_detail("Constructeur numéro 1.0")
     constructeur_1.goto_breadcrumb()
+
     constructeur_1.test_filter()
     constructeur_1.test_search()
     constructeur_1.erase()
