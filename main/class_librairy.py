@@ -5,8 +5,8 @@ import time
 class connectAnyway():
     def __init__(self) -> None:
         self.playwright = sync_playwright().start()
-        self.browser = self.playwright.chromium.launch(headless=False)
-        self.context = self.browser.new_context()
+        self.browser = self.playwright.chromium.launch(headless=False, channel="chrome", args=["--start-maximized"])
+        self.context = self.browser.new_context(no_viewport=True)
         self.page = self.context.new_page()
 
     def connect(self, url):
@@ -125,7 +125,7 @@ class modeleTransceiverClass():
         utils.fill_data("Tx", "input", self.tx, self.page)
         utils.fill_data("Rx", "input", self.rx, self.page)
         utils.fill_data("Description", "textarea", self.description, self.page)
-        self.page.get_by_role("button", name="Ajouter").nth(1).click(timeout=500)
+        self.page.get_by_role("button", name="Ajouter").nth(1).click()
 
     def click_ok(self):
         self.page.get_by_role("button", name="OK").click()
