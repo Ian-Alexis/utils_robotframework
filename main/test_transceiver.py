@@ -1,9 +1,10 @@
 import class_librairy as CL
-import os 
+import os
 
 commande = "playwright show-trace out/trace.zip"
 
-url = "https://anyway.qal.covage.com"
+url = "https://anyway.dev.covage.com"
+
 
 def test_Transceiver():
     if test():
@@ -11,6 +12,7 @@ def test_Transceiver():
         assert True
     else:
         assert False
+
 
 def test():
     AW = CL.connectAnyway()

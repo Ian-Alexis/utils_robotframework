@@ -2,6 +2,7 @@ import utils as utils
 from playwright.sync_api import sync_playwright
 import time
 
+
 class connectAnyway():
     def __init__(self) -> None:
         self.playwright = sync_playwright().start()
@@ -52,11 +53,11 @@ class constructeurClass(connectAnyway):
         utils.fill_data("Nom", "input", data[test]["Nom"], self.page)
         utils.fill_data("Préfixe MAC", "textarea", data[test]["Préfixe MAC"], self.page)
         self.page.get_by_role("button", name="").nth(1).click()
-    
+
     def click_ok(self):
         self.page.get_by_role("button", name="OK").click()
 
-    def multiple_create(self,n):
+    def multiple_create(self, n):
         for i in range(n):
             self.goto_create()
             self.nom = "Constructeur multiple numéro {}".format(i+1)
@@ -65,20 +66,21 @@ class constructeurClass(connectAnyway):
 
     def erase(self):
         utils.erase_el(self.nom, self.page)
-    
-    def multiple_erase(self,n):
+
+    def multiple_erase(self, n):
         for i in range(n):
             self.nom = "Constructeur multiple numéro {}".format(i+1)
             self.erase()
 
     def test_filter(self):
         utils.test_filter(self.page, self.data)
-    
+
     def test_search(self):
         utils.test_search(self.page, self.data)
 
     def test_displayed_filter(self, number):
         utils.test_displayed_filter(self.page, number)
+
 
 class modeleTransceiverClass():
     def __init__(self, AW, test) -> None:
