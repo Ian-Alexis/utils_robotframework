@@ -6,7 +6,9 @@ import time
 class connectAnyway():
     def __init__(self) -> None:
         self.playwright = sync_playwright().start()
-        self.browser = self.playwright.chromium.launch(headless=False, channel="chrome", args=["--start-maximized"])
+        self.browser = self.playwright.chromium.launch(headless=False,
+                                                       channel="chrome",
+                                                       args=["--start-maximized"])
         self.context = self.browser.new_context(no_viewport=True)
         self.page = self.context.new_page()
 
@@ -17,7 +19,9 @@ class connectAnyway():
         return self.page
 
     def debug(self):
-        self.context.tracing.start(screenshots=True, snapshots=True, sources=True)
+        self.context.tracing.start(screenshots=True,
+                                   snapshots=True,
+                                   sources=True)
 
 
 class constructeurClass(connectAnyway):
@@ -51,8 +55,15 @@ class constructeurClass(connectAnyway):
     def fill_detail(self, test):
         data = utils.extract_from_json("constructeurs")
         utils.fill_data("Nom", "input", data[test]["Nom"], self.page)
-        utils.fill_data("Préfixe MAC", "textarea", data[test]["Préfixe MAC"], self.page)
+        utils.fill_data("Préfixe MAC", "textarea",
+                        data[test]["Préfixe MAC"], self.page)
         self.page.get_by_role("button", name="").nth(1).click()
+
+    def check_detail(self, test):
+        data = utils.extract_from_json("constructeurs")
+        utils.check_data("Nom", "input", data[test]["Nom"], self.page)
+        utils.check_data("Préfixe MAC", "textarea",
+                         data[test]["Préfixe MAC"], self.page)
 
     def click_ok(self):
         self.page.get_by_role("button", name="OK").click()
@@ -102,7 +113,7 @@ class modeleTransceiverClass():
     def goto(self):
         self.page.get_by_role("link", name=" Modèle").click()
         self.page.get_by_role("link", name="Transceivers").click()
-    
+
     def goto_create(self):
         self.page.get_by_role("link", name="").click()
 
@@ -116,37 +127,84 @@ class modeleTransceiverClass():
         ).get_by_role("link", name="Transceivers").click()
 
     def create(self):
-        utils.fill_data("Constructeur", "scrolling menu", self.constructeur, self.page)
-        utils.fill_data("Nom du modèle", "input", self.nom, self.page)
-        utils.fill_data("Référence", "input", self.reference, self.page)
-        utils.fill_data("Technique", "scrolling menu", self.technique, self.page)
-        utils.fill_data("Type", "scrolling menu", self.type, self.page)
-        utils.fill_data("Débit", "scrolling menu", self.debit, self.page)
-        utils.fill_data("Distance (Km)", "input", self.distance, self.page)
-        utils.fill_data("Budget optique (dBm)", "input", self.budget_optique, self.page)
-        utils.fill_data("Tx", "input", self.tx, self.page)
-        utils.fill_data("Rx", "input", self.rx, self.page)
-        utils.fill_data("Description", "textarea", self.description, self.page)
+        utils.fill_data("Constructeur", "scrolling menu",
+                        self.constructeur, self.page)
+        utils.fill_data("Nom du modèle", "input",
+                        self.nom, self.page)
+        utils.fill_data("Référence", "input",
+                        self.reference, self.page)
+        utils.fill_data("Technique", "scrolling menu",
+                        self.technique, self.page)
+        utils.fill_data("Type", "scrolling menu",
+                        self.type, self.page)
+        utils.fill_data("Débit", "scrolling menu",
+                        self.debit, self.page)
+        utils.fill_data("Distance (Km)", "input",
+                        self.distance, self.page)
+        utils.fill_data("Budget optique (dBm)", "input",
+                        self.budget_optique, self.page)
+        utils.fill_data("Tx", "input",
+                        self.tx, self.page)
+        utils.fill_data("Rx", "input",
+                        self.rx, self.page)
+        utils.fill_data("Description", "textarea",
+                        self.description, self.page)
         self.page.get_by_role("button", name="Ajouter").nth(1).click()
 
     def click_ok(self):
         self.page.get_by_role("button", name="OK").click()
-    
+
     def fill_detail(self, test):
         data = utils.extract_from_json("modèle_transceivers")
-        utils.fill_data("Constructeur", "scrolling menu", data[test]["Constructeur"], self.page)
-        utils.fill_data("Nom du modèle", "input", data[test]["Nom"], self.page)
-        utils.fill_data("Référence", "input", data[test]["Référence"], self.page)
-        utils.fill_data("Technique", "scrolling menu", data[test]["Technique"], self.page)
-        utils.fill_data("Type", "scrolling menu", data[test]["Type"], self.page)
-        utils.fill_data("Débit", "scrolling menu", data[test]["Débit"], self.page)
-        utils.fill_data("Distance (Km)", "input", data[test]["Distance (Km)"], self.page)
-        utils.fill_data("Budget optique (dBm)", "input", data[test]["Budget optique (dBm)"], self.page)
-        utils.fill_data("Tx", "input", data[test]["Tx"], self.page)
-        utils.fill_data("Rx", "input", data[test]["Rx"], self.page)
-        utils.fill_data("Description", "textarea", data[test]["Description"], self.page)
+        utils.fill_data("Constructeur", "scrolling menu",
+                        data[test]["Constructeur"], self.page)
+        utils.fill_data("Nom du modèle", "input", 
+                        data[test]["Nom"], self.page)
+        utils.fill_data("Référence", "input",
+                        data[test]["Référence"], self.page)
+        utils.fill_data("Technique", "scrolling menu",
+                        data[test]["Technique"], self.page)
+        utils.fill_data("Type", "scrolling menu", 
+                        data[test]["Type"], self.page)
+        utils.fill_data("Débit", "scrolling menu",
+                        data[test]["Débit"], self.page)
+        utils.fill_data("Distance (Km)", "input",
+                        data[test]["Distance (Km)"], self.page)
+        utils.fill_data("Budget optique (dBm)", "input",
+                        data[test]["Budget optique (dBm)"], self.page)
+        utils.fill_data("Tx", "input",
+                        data[test]["Tx"], self.page)
+        utils.fill_data("Rx", "input",
+                        data[test]["Rx"], self.page)
+        utils.fill_data("Description", "textarea",
+                        data[test]["Description"], self.page)
         self.page.get_by_role("button", name="").nth(1).click()
-    
+
+    def check_detail(self, test):
+        data = utils.extract_from_json("modèle_transceivers")
+        utils.check_data("Constructeur", "scrolling menu",
+                         data[test]["Constructeur"], self.page)
+        utils.check_data("Nom du modèle", "input", 
+                         data[test]["Nom"], self.page)
+        utils.check_data("Référence", "input",
+                         data[test]["Référence"], self.page)
+        utils.check_data("Technique", "scrolling menu",
+                         data[test]["Technique"], self.page)
+        utils.check_data("Type", "scrolling menu", 
+                         data[test]["Type"], self.page)
+        utils.check_data("Débit", "scrolling menu",
+                         data[test]["Débit"], self.page)
+        utils.check_data("Distance (Km)", "input",
+                         data[test]["Distance (Km)"], self.page)
+        utils.check_data("Budget optique (dBm)", "input",
+                         data[test]["Budget optique (dBm)"], self.page)
+        utils.check_data("Tx", "input",
+                         data[test]["Tx"], self.page)
+        utils.check_data("Rx", "input",
+                         data[test]["Rx"], self.page)
+        utils.check_data("Description", "textarea",
+                         data[test]["Description"], self.page)
+
     def test_header_filter(self, element):
         utils.test_header_filter(self.page, element)
 

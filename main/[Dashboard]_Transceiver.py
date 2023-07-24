@@ -5,12 +5,14 @@ commande = "playwright show-trace out/trace.zip"
 
 url = "https://anyway.qal.covage.com"
 
+
 def test_constructeur():
     if test():
         os.system(commande)
         assert True
     else:
         assert False
+
 
 def test():
     AW = CL.connectAnyway()
@@ -50,9 +52,8 @@ def test():
     transceiver_1.erase()
     transceiver_1.test_search
 
-    CL.time.sleep(3)
-    
     AW.context.tracing.stop(path="out/trace.zip")
     return True
+
 
 test_constructeur()

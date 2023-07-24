@@ -1,6 +1,7 @@
 import json
 import time
 
+
 def connect_to_anyway(PS):
     # playwright=sync_playwright().start()
     url = "https://anyway.qal.covage.com/"
@@ -29,22 +30,43 @@ def fill_data(name, element_type, data, page, check=False):
             full_xpath = "/following-sibling::textarea[1]"
         page.wait_for_selector(base_xpath + full_xpath).fill(data)
     if check:
-        check_data(name, base_xpath + full_xpath, element_type, data, page)
+        check_data_filled(name, base_xpath + full_xpath, element_type, data, page)
     return True
 
-def check_data(name, xpath, element_type, data, page):
-    print("\n\n")
+
+def check_data_filled(name, xpath, element_type, data, page):
     if element_type != "scrolling menu":
         content_text = str(page.query_selector(xpath).get_property('value'))
-    else : 
+    else:
         xpath_adding = "/button"
-        content_text = str(page.query_selector(xpath+xpath_adding).get_attribute('title'))
-        print(xpath+xpath_adding)
-        print(content_text)
+        content_text = page.query_selector(xpath+xpath_adding)
+        content_text = str(content_text.get_attribute('title'))
     if data == content_text:
         print("The {} {} is well filled".format(element_type, name))
-    else : 
+    else:
         print("The {} {} is not well filled".format(element_type, name))
+
+
+def check_data(name, element_type, data, page):
+    base_xpath = "//label[contains(text(), '{}')]".format(name)
+    if element_type == "scrolling menu":
+        full_xpath = "/following-sibling::div/button"
+        xpath = base_xpath + full_xpath
+        content_text = page.query_selector(xpath)
+        content_text = str(content_text.get_attribute('title'))
+    else:
+        if element_type == 'input':
+            full_xpath = "/following-sibling::input[1]"
+        elif element_type == 'textarea':
+            full_xpath = "/following-sibling::textarea[1]"
+        xpath = base_xpath + full_xpath
+        page.wait_for_selector(xpath)
+        content_text = str(page.query_selector(xpath).get_property('value'))
+    if data == content_text:
+        print("The {} {} is well filled".format(element_type, name))
+    else:
+        print("The {} {} is not well filled".format(element_type, name))
+
 
 def erase_el(name, page):
     page.locator("#table-filter-name").click()
@@ -62,8 +84,9 @@ def erase_el(name, page):
         page.get_by_role("button", name="Confirmer").click()
         page.get_by_role("button", name="OK").click()
         print("Element {} found in order to erase".format(name))
-    else: 
+    else:
         print("Element {} not found in order to erase".format(name))
+
 
 def filter_search(page, data):
     # extract name of column
@@ -83,8 +106,8 @@ def filter_search(page, data):
         try:
             if "input-group" in element.get_attribute("class"):
                 el = "/input"
-                xpath_input = '//tbody/tr/td[position()={}]/div{}'.format(index, el)
-                element_input = page.wait_for_selector(xpath_input)
+                x_input = '//tbody/tr/td[position()={}]/div{}'.format(index, el)
+                element_input = page.wait_for_selector(x_input)
                 element_input.fill(search)
         except:
             option = '//li/a/span[contains(text(),"{}")]'.format(search)
@@ -105,6 +128,7 @@ def find_index(liste, el):
             index = i
     return index
 
+
 def get_column_index(page, column_name):
     time.sleep(0.5)
     headers = get_header(page)
@@ -113,6 +137,7 @@ def get_column_index(page, column_name):
         if header == column_name:
             return i+1
     return False
+
 
 def get_column_content(page, column_name, lower=False):
     column_index = get_column_index(page, column_name)
@@ -130,22 +155,24 @@ def get_column_content(page, column_name, lower=False):
                 column_content.append(cells[column_index].text_content().strip().lower())
             else: 
                 column_content.append(cells[column_index].text_content().strip())
-    column_content_clean = [element.replace('\n','') for element in column_content]
-    column_content_clean.pop(0) # On enlève l'élément provenant du bandeau rechercher
+    column_content_clean = [element.replace('\n', '') for element in column_content]
+    # On enlève l'élément provenant du bandeau rechercher
+    column_content_clean.pop(0)
     return column_content_clean
+
 
 def test_filter(page, data, test=None):
     # extract name of column
     headers = get_header(page)
     for header in headers:
-        unfiltered = get_column_content(page,header, lower=True)
+        unfiltered = get_column_content(page, header, lower=True)
         if header == "Débit":
             unfiltered = custom_sort_key(unfiltered)
-        else :
+        else:
             unfiltered.sort()
         # print(unfiltered)
         page.get_by_role("columnheader", name=header).get_by_role("img").click()
-        filtered = get_column_content(page,header, lower=True)
+        filtered = get_column_content(page, header, lower=True)
         # print(filtered)
         if filtered == unfiltered:
             print("{} filter works correctly".format(header))
@@ -153,34 +180,34 @@ def test_filter(page, data, test=None):
             print("{} filter doesn't work".format(header)) 
         # print("\n\n")  
 
+
 def test_search(page, data, test=None): 
     headers = get_header(page)
     for header in headers:
         search = data[header]
         index = find_index(headers, header) + 2
-        # index  = get_column_index(page, header)
         xpath = '//tbody/tr/td[position()={}]/div'.format(index)
         element = page.wait_for_selector(xpath)
         page.click(xpath)
         var = element.query_selector('*')
-        # print('Le nom de la colonne {} est associé à :\n{}'.format(header, var.text_content()))
         if var.text_content() == '':
             # if input : 
             if "input-group" in element.get_attribute("class"):
                 el = "/input"
-                xpath_input = '//tbody/tr/td[position()={}]/div{}'.format(index, el)
-                element_input = page.wait_for_selector(xpath_input)
+                x_input = '//tbody/tr/td[position()={}]/div{}'.format(index, el)
+                element_input = page.wait_for_selector(x_input)
                 element_input.fill(search)
         else:
-            # print(element.query_selector('*').get_attribute('class'))
             # if scrolling menu multiple choice :
-            if 'show-tick' in element.query_selector('*').get_attribute('class'):
+            element_class = element.query_selector('*').get_attribute('class')
+            if 'show-tick' in element_class:
                 option = '//li/a/span[contains(text(),"{}")]'.format(search)
                 page.click(option)
-            # if single choice : 
-            else :
+            # if single choice :
+            else:
                 option = '//li/a/span[contains(text(),"{}")]'.format(search)
                 page.click(option)
+
 
 def get_header(page):
     page.wait_for_selector('//thead[@class="table-dark"]')
@@ -191,13 +218,14 @@ def get_header(page):
     headers_data.pop(0)
     return headers_data
 
+
 def custom_sort_key(list):
     sorted = []
     sorted_ = []
     sorted_m = []
     sorted_g = []
     for debit in list:
-        digits = ''.join(filter(str.isdigit, debit))
+        # digits = ''.join(filter(str.isdigit, debit))
         letters = ''.join(filter(str.isalpha, debit))
         if debit == "":
             sorted_.append(debit)
@@ -210,19 +238,22 @@ def custom_sort_key(list):
     sorted_m.sort()
     sorted_m.reverse()
     sorted = sorted_+sorted_m+sorted_g
-    
+
     return sorted
+
 
 def extract_checked_element(page, checkboxes):
     checked_checkboxes = []
     for checkbox in checkboxes:
         if checkbox.is_checked():
-            checked_checkboxes.append(checkbox.evaluate_handle('el => el.nextElementSibling').inner_text())
+            script = checkbox.evaluate_handle('el => el.nextElementSibling')
+            checked_checkboxes.append(script.inner_text())
             # print("J'ai trouvé une checkbox cochée")
             # print(checkbox.evaluate_handle('el => el.nextElementSibling').inner_text())
         # else : 
             # print("J'ai trouvé une checkbox pas cochée")
     return checked_checkboxes
+
 
 def test_header_filter(page, elements):
     page.wait_for_selector('//*[@id="columnSelect-table"]').click()
@@ -232,47 +263,56 @@ def test_header_filter(page, elements):
     check_checkboxes(page, elements)
     checked_checkboxes_after = extract_checked_element(page, checkboxes)
     headers_after = get_header(page)
-    check_header_filter(elements, checked_checkboxes_before, checked_checkboxes_after, headers_before, headers_after)
+    check_header_filter(elements, checked_checkboxes_before,
+                        checked_checkboxes_after, headers_before,
+                        headers_after)
     check_checkboxes(page, elements, visible=True)
     headers_after = get_header(page)
-    if headers_after == checked_checkboxes_before :
+    if headers_after == checked_checkboxes_before:
         print("Checkboxes rechecked")
-    else : 
+    else:
         print("Checkboxes still unchecked")
     page.wait_for_selector('//*[@id="columnSelect-table"]').click()
 
+
 def check_checkboxes(page, elements, visible=False):
-    for element in elements :
+    for element in elements:
         xpath_option = "//label[contains(text(), '{}')]/preceding-sibling::input".format(element)
         page.wait_for_selector(xpath_option).click()
         xpath_column_name = '//th/div/span[contains(text(),"{}")]'.format(element)
         page.wait_for_selector(xpath_column_name)
         element = page.query_selector(xpath_column_name)
-        if visible :
+        if visible:
             element.wait_for_element_state('visible')
-        else : 
+        else:
             element.wait_for_element_state('hidden')
-    
 
-def check_header_filter(elements, checked_checkboxes_before, checked_checkboxes_after, headers_before, headers_after):
-    test_size = len(checked_checkboxes_before) - len(checked_checkboxes_after) == len(elements)
-    if test_size : 
+
+def check_header_filter(elements, checked_checkboxes_before,
+                        checked_checkboxes_after, headers_before,
+                        headers_after):
+    nbr_el = len(checked_checkboxes_before) - len(checked_checkboxes_after)
+    test_size = nbr_el == len(elements)
+    if test_size:
         test_elements = True 
-        for element in elements :
-            for checkbox in checked_checkboxes_after :
-                if not test_elements :
+        for element in elements:
+            for checkbox in checked_checkboxes_after:
+                if not test_elements:
                     print("{} element is still checked".format(element))
                     break
-                elif element == checkbox :
+                elif element == checkbox:
                     test_elements = False
-        if headers_before == checked_checkboxes_before :
-            print("All filtered elements are present in the header before filtering")
-        else :
+        if headers_before == checked_checkboxes_before:
+            print("All filtered elements are present"
+                  + " in the header before filtering")
+        else:
             print("Missing filterd element in the header before filtering")
-        if headers_after == checked_checkboxes_after :
-            print("All filtered elements are present in the header after filtering")
-        else : 
+        if headers_after == checked_checkboxes_after:
+            print("All filtered elements are present"
+                  + " in the header after filtering")
+        else:
             print("Missing filterd element in the header after filtering")
+
 
 def search_element_in_header(headers, element):
     test = False
@@ -280,6 +320,7 @@ def search_element_in_header(headers, element):
         if header == element:
             test = True
     return test
+
 
 def test_displayed_filter(page, number):
     xpath_num_page = '//*[@id="perPage"]/following-sibling::button'
@@ -291,6 +332,7 @@ def test_displayed_filter(page, number):
     page.wait_for_selector('//nav/ul[@class="pagination"]')
     # time.sleep(5)
     get_rows_number(page)
+
 
 def get_rows_number(page):
     all_rows = page.wait_for_selector('//tbody')
